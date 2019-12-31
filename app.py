@@ -161,7 +161,7 @@ def add():
        
        try:
            if request.method == 'POST' and 'inputDeviceName' in request.form:
-               name = request.form['inpputDeviceName']
+               name = request.form['inputDeviceName']
                serialnum = request.form['inputSerialNumber']
                installby = request.form['inputInstalledBy']
                operatingsys = request.form['inputOperatingSys']
@@ -171,7 +171,7 @@ def add():
                condition  = request.form['inputCondition']
                dateadded  = request.form['inputDateAdded']
                datedamaged= request.form['inputDateDamaged']
-               return "<h1>{{name}}</h1>"
+
                db = sqlController.databaseGenerator("deviceManager", columns)
                db.addRecord(["'"+ name+"'", "'"+serialnum+"'", "'"+installby+"'","'"+operatingsys+"'", 
                              "'"+devicetype+"'", "'"+inputmodel+"'", "'"+inputzone+"'", "'"+condition+"'", dateadded, datedamaged], "devices")

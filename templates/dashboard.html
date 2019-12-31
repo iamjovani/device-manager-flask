@@ -169,14 +169,14 @@
       </div>
       <div class="modal-body mx-3">
         
-        <form >
+        <form action="{{ url_for('dashboard') }}" method="post">
   <!-- Grid row -->
   <div class="form-row">
     <!-- Grid column -->
     <div class="col-md-6">
       <!-- Device input -->
       <div class="md-form form-group">
-        <input type="email" class="form-control" id="inputDeviceName" placeholder="BAP-SURF-A01">
+        <input type="text" class="form-control" id="inputDeviceName" placeholder="BAP-SURF-A01">
         <label for="inputDeviceName">Name</label>
       </div>
     </div>
@@ -186,7 +186,7 @@
     <div class="col-md-6">
       <!-- Device input -->
       <div class="md-form form-group">
-        <input type="password" class="form-control" id="inputSerialNumber" placeholder="F10A180602970">
+        <input type="text" class="form-control" id="inputSerialNumber" placeholder="F10A180602970">
         <label for="inputSerialNumber">Serial Number</label>
       </div>
     </div>

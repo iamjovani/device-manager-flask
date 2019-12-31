@@ -4,6 +4,14 @@ import MySQLdb.cursors
 import re
 from datetime import timedelta
 from flask import session, app
+from flask.helpers import flash
+import sqlController
+
+columns = {
+  
+    "accounts": ("(", "id", "username", "password", "email", ")"), 
+    "devices": ("(", "name", "serial_number", "installed_by", "operating_sys", "tablet_type", "model", "zone", "condition", "date_added", "date_damaged", ")")
+}
 
 
 app = Flask(__name__, template_folder="templates")
@@ -15,7 +23,7 @@ app.secret_key = 'your secret key'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'pythonlogin'
+app.config['MYSQL_DB'] = 'deviceManager'
 
 # Intialize MySQL
 mysql = MySQL(app)
@@ -128,21 +136,9 @@ def profile():
 
 
 
-@app.route('/dashboard', methods=['GET', 'POST'])
+@app.route('/dashboard')
 def dashboard():
     if 'loggedin' in session:
-        # We need all the account info for the user so we can display it on the profile page
-       cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-       cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
-       account = cursor.fetchone()
-       
-       if request.method == 'POST' and 'search' in request.form:
-           search = request.form['search']
-           cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-           cursor.execute('''SELECT * FROM devices WHERE name LIKE %s''', request.form['search']) 
-           data = cursor.fetchall()
-           return render_template('dashboard.html', username=session['username'], values=data)
-       else:
         # We need all the account info for the user so we can display it on the profile page
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
@@ -153,6 +149,37 @@ def dashboard():
         # Show the profile page with 
         return render_template('dashboard.html', username=session['username'], values=data) # values not transmitting to table
     return redirect(url_for('login'))
+
+
+#issues are here
+@app.route('/dashboard',  methods=['POST'])
+def add():
+   if 'loggedin' in session: 
+       cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+       cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+       account = cursor.fetchone()
+       
+       try:
+           if request.method == 'POST' and 'inputDeviceName' in request.form:
+               name = request.form['inpputDeviceName']
+               serialnum = request.form['inputSerialNumber']
+               installby = request.form['inputInstalledBy']
+               operatingsys = request.form['inputOperatingSys']
+               devicetype = request.form['inputDeviceType']
+               inputmodel = request.form['inputModel']
+               inputzone  = request.form['inputZone']
+               condition  = request.form['inputCondition']
+               dateadded  = request.form['inputDateAdded']
+               datedamaged= request.form['inputDateDamaged']
+               return "<h1>{{name}}</h1>"
+               db = sqlController.databaseGenerator("deviceManager", columns)
+               db.addRecord(["'"+ name+"'", "'"+serialnum+"'", "'"+installby+"'","'"+operatingsys+"'", 
+                             "'"+devicetype+"'", "'"+inputmodel+"'", "'"+inputzone+"'", "'"+condition+"'", dateadded, datedamaged], "devices")
+              
+           return render_template('dashboard.html', username=session['username'])
+       
+       except ValueError as error:
+           flash("Failed to insert record into Laptop table {}".format(error))
 
 
 @app.errorhandler(404)

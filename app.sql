@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS `pythonlogin`;
-CREATE DATABASE IF NOT EXISTS `pythonlogin` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `pythonlogin`;
+DROP DATABASE IF EXISTS `deviceManager`;
+CREATE DATABASE IF NOT EXISTS `deviceManager` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `deviceManager`;
 
 CREATE TABLE IF NOT EXISTS `accounts` 
 (

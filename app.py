@@ -152,7 +152,7 @@ def dashboard():
 
 
 #issues are here
-@app.route('/dashboard',  methods=['POST'])
+@app.route('/add',  methods=['POST'])
 def add():
    if 'loggedin' in session: 
        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -161,21 +161,20 @@ def add():
        
        try:
            if request.method == 'POST' and 'inputDeviceName' in request.form:
-               name = request.form['inputDeviceName']
-               serialnum = request.form['inputSerialNumber']
-               installby = request.form['inputInstalledBy']
-               operatingsys = request.form['inputOperatingSys']
-               devicetype = request.form['inputDeviceType']
-               inputmodel = request.form['inputModel']
-               inputzone  = request.form['inputZone']
-               condition  = request.form['inputCondition']
-               dateadded  = request.form['inputDateAdded']
-               datedamaged= request.form['inputDateDamaged']
+               name = request.form.get('inputDeviceName')
+               serialnum = request.form.get('inputSerialNumber')
+               installby = request.form.get('inputInstalledBy')
+               operatingsys = request.form.get('inputOperatingSys')
+               devicetype = request.form.get('inputDeviceType')
+               inputmodel = request.form.get('inputModel')
+               inputzone  = request.form.get('inputZone')
+               condition  = request.form.get('inputCondition')
+               dateadded  = request.form.get('inputDateAdded')
+               datedamaged= request.form.get('inputDateDamaged')
 
                db = sqlController.databaseGenerator("deviceManager", columns)
                db.addRecord(["'"+ name+"'", "'"+serialnum+"'", "'"+installby+"'","'"+operatingsys+"'", 
-                             "'"+devicetype+"'", "'"+inputmodel+"'", "'"+inputzone+"'", "'"+condition+"'", dateadded, datedamaged], "devices")
-              
+                             "'"+devicetype+"'", "'"+inputmodel+"'", "'"+inputzone+"'", "'"+condition+"'", "'"+dateadded+"'", "'"+datedamaged+"'"], "devices")
            return render_template('dashboard.html', username=session['username'])
        
        except ValueError as error:

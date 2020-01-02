@@ -1,9 +1,11 @@
 import mysql.connector
+import traceback
+import sys
 
 #attributes needed for the specification of columns in a table 
 columns = {
   
-    "account": ("(", "id", "username", "password", "email", ")"), 
+    "account": ("(", "id", "username", "password", "email", "privilege", "location" ,")"), 
     "devices": ("(", "name", "serial_number", "installed_by", "operating_sys", "tablet_type", "model", "zone", "condition", "date_added", "date_damaged", ")")
     
 }
@@ -26,8 +28,9 @@ class databaseGenerator:
             strstatement  ="INSERT INTO "+str(name)+" "+ "".join(self.column[name])
             strstatement += ' VALUES({});'.format(','.join("{0}".format(x) for x in attrib))
             self.mycursor.execute(strstatement)
-        except:
-            print("Please check input for addRecord")
+        except Exception as err:
+            error = "{}. Please check input for addRecord.".format(err)
+            print(error)
 
     #key is the identifier of the value to be removed
     #name is the name of the table to removed the record form
@@ -39,8 +42,9 @@ class databaseGenerator:
             strstatement  = "DELETE FROM "+str(name)
             strstatement += " WHERE {} = {};".format(coltocompare, key)
             self.mycursor.execute(strstatement)
-        except:
-            print("Please check input for removeRecord")
+        except Exception as err:
+            error = "{}. Please check input for removeRecord.".format(err)
+            print(error)
 
     #name of table must be python string
     def showTableAll(self, tableName):
@@ -50,8 +54,9 @@ class databaseGenerator:
             self.mycursor.execute(strstatement)
             records = self.mycursor.fetchall()
             return records
-        except:
-            print("Please check input for showTableAll")
+        except Exception as err:
+            error = "{}. Please check input for showTableAll.".format(err)
+            print(error)
 
     #key must be quoted string if the datatype in the database is varchar or date
     #tableName - the name of the table to be updated
@@ -66,8 +71,9 @@ class databaseGenerator:
             self.mycursor.execute(strstatement)
             records = self.mycursor.fetchall()
             return records
-        except:
-            print("Please check input for showTableCondition")
+        except Exception as err:
+            error = "{}. Please check input for showTableCondition.".format(err)
+            print(error)
         
     #key must be quoted string if the datatype in the database is varchar or date
     #tableName - the name of the table to be updated
@@ -80,8 +86,9 @@ class databaseGenerator:
             strstatement = ""
             strstatement = "UPDATE {} SET {} = {} WHERE {} = {};".format(tableName, columntoupdate, value, idfn, key )
             self.mycursor.execute(strstatement)
-        except:
-            print("Pease check input for updateRecord")
+        except Exception as err:
+            error = "{}. Pease check input for updateRecord.".format(err)
+            print(error)
 
 
     #tableName - the name of the table to be updated

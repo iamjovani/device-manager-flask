@@ -166,7 +166,7 @@ def add():
            if request.method == 'POST':
                name = request.form.get('inputDeviceName')
                serialnum = request.form.get('inputSerialNumber')
-               installby = request.form.get('inputInstalledBy')
+               location = request.form.get('inputLocation')
                operatingsys = request.form.get('inputOperatingSys')
                devicetype = request.form.get('inputDeviceType')
                inputmodel = request.form.get('inputModel')
@@ -175,9 +175,9 @@ def add():
                dateadded = request.form.get('inputDateAdded')
                datedamaged = request.form.get('inputDateDamaged')
 
-               st = 'INSERT INTO `devices` (`name`, `serial_number`, `installed_by`, `operating_sys`, `tablet_type`, `model`, `zone`, `condition`, `date_added`, `date_damaged`)' \
+               st = 'INSERT INTO `devices` (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `condition`, `date_added`, `date_damaged`)' \
                     'VALUES(\"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\")'.format(
-                        name, serialnum, installby, operatingsys, devicetype, inputmodel, inputzone, condition, dateadded, datedamaged)
+                        name, serialnum, location, operatingsys, devicetype, inputmodel, inputzone, condition, dateadded, datedamaged)
                cur = mysql.connection.cursor()
                cur.execute(st)
                mysql.connection.commit()

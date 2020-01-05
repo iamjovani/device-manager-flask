@@ -213,11 +213,17 @@
                 <div class="col-md-6">
                   <!-- Device input -->
                   <div class="md-form form-group">
-                    <input type="text" class="form-control"
-                      name="inputInstalledBy" required placeholder="John Brown">
-                    <label for="inputInstalledBy">Installed By</label>
+                    <select name="inputLocation" class="form-control">
+                      <option value="Hagley Park">Hagley Park</option>
+                      <option value="Sabina">Sabina</option>
+                      <option value="Toyota">Toyota</option>
+                      <option value="Molynes">Molynes</option>
+                      <option value="Repair">Repair</option>
+                    </select>
+                    <label for="inputLocation">Location</label>
                   </div>
                 </div>
+
                 <!-- Grid column -->
 
                 <!-- Grid column -->
@@ -293,20 +299,6 @@
                   </div>
                 </div>
 
-                <div class="col-md-12">
-                  <!-- Device input -->
-                  <div class="md-form form-group">
-                    <select name="location" class="form-control">
-                      <option value="Hagley Park">Hagley Park</option>
-                      <option value="Sabina">Sabina</option>
-                      <option value="Toyota">Toyota</option>
-                      <option value="Molynes">Molynes</option>
-                      <option value="Repair">Repair</option>
-                    </select>
-                    <label for="inputLocation">Location</label>
-                  </div>
-                </div>
-
                 <!-- Grid column -->
               </div>
               <!-- Grid row -->
@@ -349,7 +341,7 @@
         <tr>
           <th>Name</th>
           <th>Serial Number</th>
-          <th>Installed By</th>
+          <th>Location</th>
           <th>Operating System</th>
           <th>Tablet Type</th>
           <th>Model</th>
@@ -365,7 +357,7 @@
         <tr>
           <td>{{row['name']}}</td>
           <td>{{row['serial_number']}}</td>
-          <td>{{row['installed_by']}}</td>
+          <td>{{row['location']}}</td>
           <td>{{row['operating_sys']}}</td>
           <td>{{row['tablet_type']}}</td>
           <td>{{row['model']}}</td>

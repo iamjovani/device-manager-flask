@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS `accounts`
   	`username` varchar(50) NOT NULL,
   	`password` varchar(255) NOT NULL,
   	`email` varchar(100) NOT NULL,
+    `privilege`varchar(20) NOT NULL,
+    `location` varchar(50) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -34,5 +36,5 @@ VALUES('BAP-WKS-A15', '14597887685', 'Dwayne', 'Windows 10', 'Microsoft Surface'
 INSERT INTO `devices`  (`name`, `serial_number`, `installed_by`, `operating_sys`, `tablet_type`, `model`, `zone`, `condition`, `date_added`, `date_damaged`)  
 VALUES('BAP-WKS-A56', '072832664353', 'Dwayne', 'Windows 10 PRO', 'Microsoft Surface', 'Pro 4', 'Zone 2', 'Good', '2015-11-13', '2019-10-25');
 
-INSERT INTO `accounts` (`id`, `username`, `password`, `email`) VALUES (1, 'test', 'test', 'test@test.com');
-INSERT INTO `accounts` (`id`, `username`, `password`, `email`) 	VALUES (2, 'admin', 'admin', 'admin@admin.com');
+INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `privilege`, `location`) VALUES (1, 'test', 'test', 'test@test.com', 'administrator', 'all');
+INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `privilege`, `location`) VALUES (2, 'admin', 'admin', 'admin@admin.com','administrator', 'all');

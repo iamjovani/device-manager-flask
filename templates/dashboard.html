@@ -161,6 +161,9 @@
 </style>
 <h2>Dashboard</h2>
 <div>
+
+</div>
+<div>
   <h4>Device Options</h4>
   <br>
   <div>
@@ -214,10 +217,11 @@
                   <!-- Device input -->
                   <div class="md-form form-group">
                     <select name="inputLocation" class="form-control">
-                      <option value="Hagley Park">Hagley Park</option>
-                      <option value="Sabina">Sabina</option>
+                      <option value="Hagley">Hagley</option>
                       <option value="Toyota">Toyota</option>
+                      <option value="Sabina">Sabina</option>
                       <option value="Molynes">Molynes</option>
+                      <option value="Warehouse">Warehouse</option>
                       <option value="Repair">Repair</option>
                     </select>
                     <label for="inputLocation">Location</label>
@@ -368,7 +372,7 @@
           <td>
             <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                 class="material-icons">&#xE254;</i></a>
-            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
+            <a href="{{ url_for('dashboard', serial_number=row["serial_number"]) }}" on class="delete" title="Delete" data-toggle="tooltip"><i
                 class="material-icons">&#xE872;</i></a>
           </td>
         </tr>

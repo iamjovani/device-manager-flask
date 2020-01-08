@@ -193,6 +193,38 @@ def delete(id_data):
     except ValueError as error:
         flash("Failed to insert record into table {}".format(error))   
 
+
+#incomplete
+@app.route('/update',methods=['POST','GET'])
+def update():
+    try:
+        if 'loggedin' in session:
+            if request.method == 'POST':
+                name          = request.form['name']
+                serial_number = request.form['serial_number']
+                location      = request.form['location']
+                operating_sys = request.form['operating_sys']
+                tablet_type   = request.form['tablet_type']
+                model         = request.form['model']
+                zone          = request.form['zone']
+                condition     = request.form['condition']
+                date_added    = request.form['date_added']
+                date_damaged  = request.form['date_damaged']
+
+                cur = mysql.connection.cursor()
+                cur.execute("""
+                       UPDATE devices
+                       SET name=%s, location=%s, operating_sys=%s, tablet_type=%s, model=%s, zone=%s, condition=%s, date_added=%s, date_damaged=%s
+                       WHERE serial_number=%s, 
+                    """, (name, location, operating_sys, tablet_type, model, zone, condition, date_added, date_damaged))
+                flash("Data Updated Successfully")
+                mysql.connection.commit()
+            return redirect(url_for('dashboard'))
+        
+    except ValueError as error:
+        flash("Failed to insert record into table {}".format(error))  
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

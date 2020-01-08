@@ -5,14 +5,8 @@ import re
 from datetime import timedelta
 from flask import session, app
 from flask.helpers import flash
-import sqlController
 
-columns = {
-
-    "accounts": ("(", "id", "username", "password", "email", ")"),
-    "devices": ("(", "name", "serial_number", "installed_by", "operating_sys", "tablet_type", "model", "zone", "condition", "date_added", "date_damaged", ")")
-}
-
+import pandas as pd
 
 app = Flask(__name__, template_folder="templates")
 
@@ -30,7 +24,7 @@ mysql = MySQL(app)
 
 
 @app.before_request
-def make_session_permanent():  # Session expires after 5 mins
+def make_session_permanent(): #Session expires after 5 mins
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=5)
 
@@ -56,8 +50,7 @@ def login():
         password = request.form['password']
         # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute(
-            'SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password))
+        cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password))
         # Fetch one record and return result
         account = cursor.fetchone()
         # If account exists in accounts table in out database
@@ -99,8 +92,7 @@ def register():
         email = request.form['email']
            # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute(
-            'SELECT * FROM accounts WHERE username = %s', (username))
+        cursor.execute('SELECT * FROM accounts WHERE username = %s', (username))
         account = cursor.fetchone()
         # If account exists show error and validation checks
         if account:
@@ -113,8 +105,7 @@ def register():
             msg = 'Please fill out the form!'
         else:
             # Account doesnt exists and the form data is valid, now insert new account into accounts table
-            cursor.execute(
-                'INSERT INTO accounts VALUES (NULL, %s, %s, %s)', (username, password, email))
+            cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s)', (username, password, email))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
     elif request.method == 'POST':
@@ -138,6 +129,7 @@ def profile():
     return redirect(url_for('login'))
 
 
+
 @app.route('/dashboard')
 def dashboard():
     if 'loggedin' in session:
@@ -145,19 +137,18 @@ def dashboard():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
         account = cursor.fetchone()
-        # Load table
+        #Load table
         cursor.execute('SELECT * FROM devices')
         data = cursor.fetchall()
-        # Show the profile page with
-        # values not transmitting to table
-        return render_template('dashboard.html', username=session['username'], values=data)
+        # Show the profile page with 
+        return render_template('dashboard.html', username=session['username'], values=data) # values not transmitting to table
     return redirect(url_for('login'))
 
 
-# issues are here
+#issues are here
 @app.route('/add',  methods=['POST'])
 def add():
-   if 'loggedin' in session:
+  if 'loggedin' in session:
        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
        cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
        account = cursor.fetchone()
@@ -182,17 +173,27 @@ def add():
                cur.execute(st)
                mysql.connection.commit()
 
-             
-               #db = sqlController.databaseGenerator("deviceManager", columns)
-               #db.addRecord(["'"+ name+"'", "'"+serialnum+"'", "'"+installby+"'","'"+operatingsys+"'", 
-                #             "'"+devicetype+"'", "'"+inputmodel+"'", "'"+inputzone+"'", "'"+condition+"'", "'"+dateadded+"'", "'"+datedamaged+"'"], "devices")
-            #render_template('dashboard.html', username=session['username'])
-       
            return redirect(url_for("dashboard", username=session['username']))
        
        except ValueError as error:
-           flash("Failed to insert record into Laptop table {}".format(error))
-
+           flash("Failed to insert record into table {}".format(error))
+           
+           
+@app.route('/dashboard/<string:id_data>', methods = ['GET'])        
+def delete(id_data):
+    try:
+        if 'loggedin' in session:
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+            account = cursor.fetchone()
+           
+            cursor.execute("DELETE FROM devices WHERE serial_number=%s", (id_data,))
+            mysql.connection.commit()
+            flash("Record Has Been Deleted Successfully")
+        return redirect(url_for("dashboard", username=session['username']))
+       
+    except ValueError as error:
+        flash("Failed to insert record into table {}".format(error))   
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -200,7 +201,7 @@ def page_not_found(e):
 
 
 
-# if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+#if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
 
 if __name__ == '__main__':
    app.run(debug = True)

@@ -121,13 +121,13 @@
 
 </style>
 <h2 style="width: 1143px;" >Dashboard</h2>
-<div style="width: 1143px;">
+<div style="width: 1143px;" class="table-responsive">
 
 </div>
-<div style="width: fit-content;">
+<div style="width: fit-content;" class="table-responsive">
   <h4>Device Options</h4>
   <br>
-  <div class ="container-fluid" style="width: fit-content;">
+  <div class ="container-fluid" style="width: fit-content;" class="table-responsive">
 
      <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog"
       aria-labelledby="myModalLabel" aria-hidden="true">
@@ -333,7 +333,7 @@
           <td>
             <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                 class="material-icons">&#xE254;</i></a>
-            <a href="/dashboard/{{ row['serial_number'] }}" onclick="return confirm('Are You Sure For Delete?')" class="delete" title="Delete" data-toggle="tooltip"><i
+            <a href="/dashboard/{{ row['serial_number'] }}" onclick="return confirm('Are You Sure You Want To Delete {{row['name']}}?')" class="delete" title="Delete" data-toggle="tooltip"><i
                 class="material-icons">&#xE872;</i></a>
           </td>
         </tr>

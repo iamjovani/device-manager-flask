@@ -5,8 +5,29 @@
 		<title>Register</title>
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css') }}">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+
+			<style>
+			html,
+			header {
+			    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../static/img/img.jpg);
+			    /* Image is centered vertically and horizontally at all times */
+			    background-position: center center;
+			    /* Image doesn't repeat */
+			    background-repeat: no-repeat;
+			    /* Makes the image fixed in the viewport so that it doesn't move when 
+			     the content height is greater than the image height */
+			    background-attachment: fixed;
+			    /* This is what makes the background image rescale based on its container's size */
+			    background-size: cover;
+			    -webkit-background-size: cover;
+			    -moz-background-size: cover;
+			    -o-background-size: cover;
+			    background-size: cover;
+			}
+		</style>
 	</head>
 	<body>
+	  <header>
 		<div class="register">
 			<h1>Register</h1>
 			<div class="links">
@@ -30,5 +51,6 @@
 				<input type="submit" value="Register">
 			</form>
 		</div>
+	  </header>
 	</body>
 </html>

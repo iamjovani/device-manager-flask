@@ -1,3 +1,4 @@
+from app import app
 from app import session
 from app import mysql
 from app import MySQLdb
@@ -41,8 +42,6 @@ def add():
        except ValueError as error:
            flash("Failed to insert record into table {}".format(error))
            
-
-
 
 @app.route('/dashboard/<string:id_data>', methods = ['GET'])        
 def delete(id_data):

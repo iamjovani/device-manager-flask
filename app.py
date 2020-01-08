@@ -145,7 +145,6 @@ def dashboard():
     return redirect(url_for('login'))
 
 
-#issues are here
 @app.route('/add',  methods=['POST'])
 def add():
   if 'loggedin' in session:

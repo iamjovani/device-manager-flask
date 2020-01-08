@@ -172,7 +172,6 @@ def add():
                cur = mysql.connection.cursor()
                cur.execute(st)
                mysql.connection.commit()
-
            return redirect(url_for("dashboard", username=session['username']))
        
        except ValueError as error:
@@ -198,8 +197,6 @@ def delete(id_data):
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-
-
 
 #if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
 

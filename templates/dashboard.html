@@ -120,14 +120,13 @@
     }
 
 </style>
-<h2 style="width: 1143px;">Dashboard</h2>
 
+
+ 
 
 </div>
-
   <br>
   <div class ="container-fluid" style="width: fit-content;" class="table-responsive">
-
      <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog"
       aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -277,7 +276,8 @@
 
     <!-- Device Table -->
     <div>
-    <h4>Device Options</h4>
+     <div class="content"><h2 style="width:  1143px;">Dashboard</h2></div>
+    <h4><b>Device Options</b></h4>
       <div class="col-sm-4">
         <button type="button" class="btn btn-info add-new" data-toggle="modal"
           data-target="#modalRegisterForm"><i class="fa fa-plus"></i> Add New</button>
@@ -289,7 +289,7 @@
 
       <div class="row">
 
-        <div class="col-sm-8"><h2>Device <b>Details</b></h2></div>
+        <div class="col-sm-8"><h2><b>Device Details</b></h2></div>
         <div class="col-sm-4">
           <form action="{{ url_for('dashboard') }}" method="post">
             <div class="search-box">

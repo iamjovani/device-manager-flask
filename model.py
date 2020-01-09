@@ -11,6 +11,13 @@ from app import flash
 import pandas as pd
 
 
+
+
+
+
+
+
+'''
 @app.route('/add',  methods=['POST'])
 def add():
   if 'loggedin' in session:

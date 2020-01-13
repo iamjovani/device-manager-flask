@@ -289,7 +289,7 @@
           </div>
           <div class="modal-body mx-3">
 
-            <form action="{{ url_for('add') }}" method="post">
+            <form action="" method="post">
               <!-- Grid row -->
               <div class="form-row">
                 <!-- Grid column -->
@@ -297,9 +297,9 @@
                   <!-- Device input -->
                   <div class="md-form form-group">
                     <input type="text" class="form-control"
-                      name="inputDeviceName" required
+                      name="editDeviceName" required
                       placeholder="BAP-SURF-A01">
-                    <label for="inputDeviceName">Name</label>
+                    <label for="editDeviceName">Name</label>
                   </div>
                 </div>
                 <!-- Grid column -->
@@ -309,9 +309,9 @@
                   <!-- Device input -->
                   <div class="md-form form-group">
                     <input type="text" class="form-control"
-                      name="inputSerialNumber" required
+                      name="editSerialNumber" required
                       placeholder="F10A180602970">
-                    <label for="inputSerialNumber">Serial Number</label>
+                    <label for="editSerialNumber">Serial Number</label>
                   </div>
                 </div>
                 <!-- Grid column -->
@@ -324,7 +324,7 @@
                 <div class="col-md-6">
                   <!-- Device input -->
                   <div class="md-form form-group">
-                    <select name="inputLocation" class="form-control">
+                    <select name="editLocation" class="form-control">
                       <option value="Hagley">Hagley</option>
                       <option value="Toyota">Toyota</option>
                       <option value="Sabina">Sabina</option>
@@ -332,7 +332,7 @@
                       <option value="Warehouse">Warehouse</option>
                       <option value="Repair">Repair</option>
                     </select>
-                    <label for="inputLocation">Location</label>
+                    <label for="editLocation">Location</label>
                   </div>
                 </div>
 
@@ -343,9 +343,9 @@
                   <!-- Device input -->
                   <div class="md-form form-group">
                     <input type="text" class="form-control"
-                      name="inputOperatingSys" required placeholder="Windows
+                      name="editOperatingSys" required placeholder="Windows
                       10">
-                    <label for="inputOperatingSys">Operating System</label>
+                    <label for="editOperatingSys">Operating System</label>
                   </div>
                 </div>
                 <!-- Grid column -->
@@ -359,9 +359,9 @@
                   <!-- Device input -->
                   <div class="md-form form-group">
                     <input type="text" class="form-control"
-                      name="inputDeviceType" required placeholder="Microsoft
+                      name="editDeviceType" required placeholder="Microsoft
                       Surface">
-                    <label for="inputDeviceType">Device Type</label>
+                    <label for="editDeviceType">Device Type</label>
                   </div>
                 </div>
                 <!-- Grid column -->
@@ -370,18 +370,18 @@
                 <div class="col-md-6">
                   <!-- Device input -->
                   <div class="md-form form-group">
-                    <input type="text" class="form-control" name="inputModel"
+                    <input type="text" class="form-control" name="editModel"
                       required placeholder="Pro 3">
-                    <label for="inputModel">Model</label>
+                    <label for="editModel">Model</label>
                   </div>
                 </div>
 
                 <div class="col-md-6">
                   <!-- Device input -->
                   <div class="md-form form-group">
-                    <input type="text" class="form-control" name="inputZone"
+                    <input type="text" class="form-control" name="editZone"
                       required placeholder="Zone 1">
-                    <label for="inputZone">Zone</label>
+                    <label for="editZone">Zone</label>
                   </div>
                 </div>
 
@@ -389,25 +389,25 @@
                   <!-- Device input -->
                   <div class="md-form form-group">
                     <input type="text" class="form-control"
-                      name="inputCondition" required placeholder="Good">
-                    <label for="inputCondition">Condition</label>
+                      name="editCondition" required placeholder="Good">
+                    <label for="editCondition">Condition</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <!-- Device input -->
                   <div class="md-form form-group">
                     <input type="date" class="form-control"
-                      name="inputDateAdded" required placeholder="12/12/2012">
-                    <label for="inputDateAdded">Date Added</label>
+                      name="editDateAdded" required placeholder="12/12/2012">
+                    <label for="editDateAdded">Date Added</label>
                   </div>
                 </div>
 
                 <div class="col-md-6">
                   <!-- Device input -->
                   <div class="md-form form-group">
-                    <input type="date" class="form-control"
-                      name="inputDateDamaged" required placeholder="06/09/2016">
-                    <label for="inputDateDamaged">Date Damaged</label>
+                    <input type="date" class="form-control" 
+                      name="editDateDamaged" required placeholder="06/09/2016">
+                    <label for="editDateDamaged">Date Damaged</label>
                   </div>
                 </div>
 
@@ -415,7 +415,7 @@
               </div>
               <!-- Grid row -->
               <div>
-                <button class="btn btn-primary">Add Device</button>
+                <button class="btn btn-primary">Update Device</button>
               </div>
             </form>
           </div>
@@ -428,7 +428,7 @@
 
     <!-- Device Table -->
     <div>
-     <div class="content"><h2 style="width:  1143px;">Dashboard</h2></div>
+     <div class="content"><h2 style="width:  1130px;">Dashboard</h2></div>
     <h4><b>Device Options</b></h4>
       <div class="col-sm-4">
         <button type="button" class="btn btn-info add-new" data-toggle="modal"

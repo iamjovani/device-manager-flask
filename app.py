@@ -197,10 +197,20 @@ def delete(id_data):
 
 
 #incomplete
-@app.route('/update',methods=['POST','GET'])
-def update():
+@app.route('/dashboard/<string:id_data>',methods=['POST','GET'])
+def update(id_data):
     try:
         if 'loggedin' in session:
+            
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+            account = cursor.fetchone()
+
+            
+            cursor.execute('SELECT * FROM devices WHERE id = %s', (id_data,))
+            device = cursor.fetchone()
+            
+            
             if request.method == 'POST':
                 name          = request.form['name']
                 serial_number = request.form['serial_number']
@@ -221,10 +231,23 @@ def update():
                     """, (name, location, operating_sys, tablet_type, model, zone, condition, date_added, date_damaged))
                 flash("Data Updated Successfully")
                 mysql.connection.commit()
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('dashboard', device=device,  username=session['username']))
         
     except ValueError as error:
         flash("Failed to insert record into table {}".format(error))  
+
+
+
+
+@app.route('/users')
+def users():
+    if 'loggedin' in session:
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+            account = cursor.fetchall()   
+            
+    return redirect(url_for('users', username=session['username']))
+
 
 
 @app.errorhandler(404)
@@ -235,3 +258,4 @@ def page_not_found(e):
 
 if __name__ == '__main__':
    app.run(debug = True)
+ 

@@ -5,8 +5,9 @@ import re
 from datetime import timedelta
 from flask import session, app
 from flask.helpers import flash
+#import bcrypt --- for encrypting password 
 
-import pandas as pd
+#import pandas as pd
 
 app = Flask(__name__, template_folder="templates")
 
@@ -239,14 +240,18 @@ def update(id_data):
 
 
 
-@app.route('/users')
+@app.route('/users',methods=['GET'])
 def users():
     if 'loggedin' in session:
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
-            account = cursor.fetchall()   
+            account = cursor.fetchone()   
             
-    return redirect(url_for('users', username=session['username']))
+            cursor.execute('SELECT * FROM accounts')
+            data = cursor.fetchall()
+            # Show the profile page with 
+            return render_template('users.html', username=session['username'], values=data) # values not transmitting to table
+    return redirect(url_for('login'))
 
 
 

@@ -28,6 +28,8 @@ mysql = MySQL(app)
 def make_session_permanent(): #Session expires after 5 mins
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=5)
+    session.modified = True
+
     #return redirect(url_for('login'))
 
 # http://localhost:5000/home - this will be the home page, only accessible for loggedin users
@@ -178,7 +180,9 @@ def add():
        except ValueError as error:
            return redirect(url_for("login"))
            #flash("Failed to insert record into table {}".format(error))
-           
+
+
+      
            
 @app.route('/dashboard/<string:id_data>', methods = ['GET'])        
 def delete(id_data):

@@ -22,18 +22,18 @@ CREATE TABLE IF NOT EXISTS `devices`
     `tablet_type`   varchar(18) NOT NULL,
     `model`			varchar(10) NOT NULL,
     `zone`			varchar(10) NOT NULL,
-    `condition`     varchar(10) NOT NULL,
+    `state`     varchar(10) NOT NULL,
     `date_added`	date NOT NULL,
     `date_damaged`  date NOT NULL,
     PRIMARY KEY (`name`, `serial_number`)
     
 );
 
-INSERT INTO `devices` (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `condition`, `date_added`, `date_damaged`) 
+INSERT INTO `devices` (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `state`, `date_added`, `date_damaged`) 
 VALUES('BAP-WKS-A10', '12097885455', 'Hagley', 'Windows 10', 'Microsoft Surface', 'Pro 4', 'Zone 4', 'Good', '2011-04-25', '2015-06-20');
-INSERT INTO `devices`  (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `condition`, `date_added`, `date_damaged`)  
+INSERT INTO `devices`  (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `state`, `date_added`, `date_damaged`)  
 VALUES('BAP-WKS-A15', '14597887685', 'Molynes', 'Windows 10', 'Microsoft Surface', 'Pro 3', 'Zone 2', 'Good', '2015-04-25', '2019-10-25');
-INSERT INTO `devices`  (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `condition`, `date_added`, `date_damaged`)  
+INSERT INTO `devices`  (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `state`, `date_added`, `date_damaged`)  
 VALUES('BAP-WKS-A56', '072832664353', 'Sabina', 'Windows 10 PRO', 'Microsoft Surface', 'Pro 4', 'Zone 2', 'Good', '2015-11-13', '2019-10-25');
 
 INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `privilege`, `location`) VALUES (1, 'test', 'test', 'test@test.com', 'administrator', 'all');

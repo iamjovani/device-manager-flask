@@ -331,7 +331,7 @@
               <td>{{row['tablet_type']}}</td>
               <td>{{row['model']}}</td>
               <td>{{row['zone']}}</td>
-              <td>{{row['condition']}}</td>
+              <td>{{row['state']}}</td>
               <td>{{row['date_added']}}</td>
               <td>{{row['date_damaged']}}</td>
               <td>
@@ -358,7 +358,7 @@
                       </div>
                       <div class="modal-body mx-3">
 
-                          <form action="" method="post">
+                          <form action="{{ url_for('update') }}" method="post">
                               <!-- Grid row -->
                               <div class="form-row">
                                   <!-- Grid column -->
@@ -451,7 +451,7 @@
                                       <!-- Device input -->
                                       <div class="md-form form-group">
                                           <input type="text" class="form-control"
-                                                 name="editCondition" required placeholder="Good" value="{{row['condition']}}">
+                                                 name="editCondition" required placeholder="Good" value="{{row['state']}}">
                                           <label for="editCondition">Condition</label>
                                       </div>
                                   </div>

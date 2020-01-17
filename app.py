@@ -165,13 +165,13 @@ def add():
                devicetype = request.form.get('inputDeviceType')
                inputmodel = request.form.get('inputModel')
                inputzone = request.form.get('inputZone')
-               condition = request.form.get('inputCondition')
+               state = request.form.get('inputCondition')
                dateadded = request.form.get('inputDateAdded')
                datedamaged = request.form.get('inputDateDamaged')
 
-               st = 'INSERT INTO `devices` (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `condition`, `date_added`, `date_damaged`)' \
+               st = 'INSERT INTO `devices` (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `state`, `date_added`, `date_damaged`)' \
                     'VALUES(\"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\")'.format(
-                        name, serialnum, location, operatingsys, devicetype, inputmodel, inputzone, condition, dateadded, datedamaged)
+               name, serialnum, location, operatingsys, devicetype, inputmodel, inputzone, state, dateadded, datedamaged)
                cur = mysql.connection.cursor()
                cur.execute(st)
                mysql.connection.commit()
@@ -201,43 +201,41 @@ def delete(id_data):
         flash("Failed to insert record into table {}".format(error))   
 
 
-#incomplete
-@app.route('/dashboard/<string:id_data>',methods=['POST','GET'])
-def update(id_data):
+#
+@app.route('/update',methods=['POST','GET'])
+def update():
     try:
         if 'loggedin' in session:
             
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
             account = cursor.fetchone()
-
-            
-            cursor.execute('SELECT * FROM devices WHERE id = %s', (id_data,))
-            device = cursor.fetchone()
-            
+           
             
             if request.method == 'POST':
-                name          = request.form['name']
-                serial_number = request.form['serial_number']
-                location      = request.form['location']
-                operating_sys = request.form['operating_sys']
-                tablet_type   = request.form['tablet_type']
-                model         = request.form['model']
-                zone          = request.form['zone']
-                condition     = request.form['condition']
-                date_added    = request.form['date_added']
-                date_damaged  = request.form['date_damaged']
+                name          = request.form['editDeviceName']
+                serial_number = request.form['editSerialNumber']
+                location      = request.form['editLocation']
+                operating_sys = request.form['editOperatingSys']
+                tablet_type   = request.form['editDeviceType']
+                model         = request.form['editModel']
+                zone          = request.form['editZone']
+                state     = request.form['editCondition']
+                date_added    = request.form['editDateAdded']
+                date_damaged  = request.form['editDateDamaged']
+
+
+                st = 'UPDATE devices SET name=\"{}\", location=\"{}\", operating_sys=\"{}\", tablet_type=\"{}\", model=\"{}\", zone=\"{}\", state=\"{}\", date_added=\"{}\", '\
+                     'date_damaged=\"{}\" WHERE serial_number=\"{}\"'.format(
+                     name, location, operating_sys, tablet_type, model, zone, state, date_added, date_damaged, serial_number)
 
                 cur = mysql.connection.cursor()
-                cur.execute("""
-                       UPDATE devices
-                       SET name=%s, location=%s, operating_sys=%s, tablet_type=%s, model=%s, zone=%s, condition=%s, date_added=%s, date_damaged=%s
-                       WHERE serial_number=%s, 
-                    """, (name, location, operating_sys, tablet_type, model, zone, condition, date_added, date_damaged))
+                cur.execute(st)
                 flash("Data Updated Successfully")
                 mysql.connection.commit()
-            return redirect(url_for('dashboard', device=device,  username=session['username']))
-        
+            return redirect(url_for('dashboard', username=session['username']))
+        return redirect(url_for('login'))
+
     except ValueError as error:
         flash("Failed to insert record into table {}".format(error))  
 

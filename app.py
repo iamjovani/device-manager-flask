@@ -176,10 +176,12 @@ def add():
                cur.execute(st)
                mysql.connection.commit()
            return redirect(url_for("dashboard", username=session['username']))
-       
+
        except ValueError as error:
            return redirect(url_for("login"))
            #flash("Failed to insert record into table {}".format(error))
+  return redirect(url_for('login'))
+       
 
 
       

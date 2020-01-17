@@ -338,6 +338,12 @@
                   <a href="#modalEditForm" class="edit" title="Edit" data-toggle="modal" data-target="#modalEditForm{{row['name']}}">
                       <i class="material-icons">&#xE254;</i>
                   </a>
+
+
+                  <a href="#modalInfoForm" class="info" title="info" data-toggle="modal" data-target="#modalEditForm"> <!--modal: modalInfoForm does not exists yet -->
+                      <i class="material-icons" style="color: #03A9F4;"> control_point_duplicate </i>
+                  </a>
+
                   <a href="/dashboard/{{ row['serial_number'] }}" onclick="return confirm('Are You Sure You Want To Delete {{row['name']}}?')" class="delete" title="Delete" data-toggle="tooltip">
                       <i class="material-icons">&#xE872;</i>
                   </a>

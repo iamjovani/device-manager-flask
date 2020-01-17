@@ -171,11 +171,20 @@
                 <a href="#modalEditForm" class="edit" title="Edit" data-toggle="modal" data-target="#modalEditForm">
                     <i class="material-icons">&#xE254;</i>
                 </a>
-                <a href="/dashboard/{{ row['id'] }}" onclick="return confirm('Are You Sure You Want To Delete {{row['username']}}?')" class="delete" title="Delete" data-toggle="tooltip">
+
+                <a href="/users/{{ row['id'] }}" onclick="return confirm('Are You Sure You Want To Delete {{row['username']}}?')" class="delete" title="Delete" data-toggle="tooltip">
                     <i class="material-icons">&#xE872;</i>
                 </a>
+
+
             </td>
         </tr>
+
+
+
+
+
+
         {% endfor %}
     </tbody>
 </table>

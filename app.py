@@ -203,6 +203,23 @@ def delete(id_data):
         flash("Failed to insert record into table {}".format(error))   
 
 
+@app.route('/users/<string:id_data>', methods = ['GET'])
+def delete_usr(id_data):
+    try:
+        if 'loggedin' in session:
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+            account = cursor.fetchone()
+           
+            cursor.execute("DELETE FROM accounts WHERE id = %s and id != %s", (id_data, account['id']))
+            mysql.connection.commit()
+            flash("Record Has Been Deleted Successfully")
+        return redirect(url_for("users", username=session['username']))
+       
+    except ValueError as error:
+        flash("Failed to delete record into table {}".format(error))   
+
+
 #
 @app.route('/update',methods=['POST','GET'])
 def update():
@@ -250,11 +267,14 @@ def users():
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
             account = cursor.fetchone()   
-            
-            cursor.execute('SELECT * FROM accounts')
-            data = cursor.fetchall()
-            # Show the profile page with 
-            return render_template('users.html', username=session['username'], values=data) # values not transmitting to table
+           
+            if account['role'] == 'admin':
+                 cursor.execute('SELECT * FROM accounts')
+                 data = cursor.fetchall()
+                 # Show the profile page with 
+                 return render_template('users.html', username=session['username'], values=data) # values not transmitting to table
+            else:
+              return redirect(url_for('home', username=session['username']))
     return redirect(url_for('login'))
 
 

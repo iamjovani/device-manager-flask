@@ -340,8 +340,9 @@
                   </a>
 
 
-                  <a href="#modalInfoForm" class="info" title="info" data-toggle="modal" data-target="#modalEditForm"> <!--modal: modalInfoForm does not exists yet -->
-                      <i class="material-icons" style="color: #03A9F4;"> control_point_duplicate </i>
+                  <a href="#modalInfoForm" class="info" title="Info" data-toggle="modal" data-target="#modalEditForm">
+                      <!--modal: modalInfoForm does not exists yet -->
+                      <i class="material-icons" style="font-size:20px; color:#03A9F4;">info_outline</i>
                   </a>
 
                   <a href="/dashboard/{{ row['serial_number'] }}" onclick="return confirm('Are You Sure You Want To Delete {{row['name']}}?')" class="delete" title="Delete" data-toggle="tooltip">
@@ -398,11 +399,11 @@
                                       <!-- Device input -->
                                       <div class="md-form form-group">
                                           <select name="editLocation" class="form-control">
-                                              <option value="Hagley" {% if row['location']=='Hagley'%} selected="selected"{% endif %}>Hagley</option>
-                                              <option value="Toyota" {% if row['location']=='Toyota'%} selected="selected"{% endif %}>Toyota</option>
-                                              <option value="Sabina" {% if row['location']=='Sabina'%} selected="selected"{% endif %}>Sabina</option>
-                                              <option value="Molynes" {% if row['location']=='Molynes'%} selected="selected"{% endif %}>Molynes</option>
-                                              <option value="Warehouse" {% if row['location']=='Warehouse'%} selected="selected"{% endif %}>Warehouse</option>
+                                              <option value="Hagley" {% if row['location']=='Hagley' %} selected="selected" {% endif %}>Hagley</option>
+                                              <option value="Toyota" {% if row['location']=='Toyota' %} selected="selected" {% endif %}>Toyota</option>
+                                              <option value="Sabina" {% if row['location']=='Sabina' %} selected="selected" {% endif %}>Sabina</option>
+                                              <option value="Molynes" {% if row['location']=='Molynes' %} selected="selected" {% endif %}>Molynes</option>
+                                              <option value="Warehouse" {% if row['location']=='Warehouse' %} selected="selected" {% endif %}>Warehouse</option>
                                               <option value="Repair">Repair</option>
                                           </select>
                                           <label for="editLocation">Location</label>
@@ -491,6 +492,36 @@
               </div>
           </div>
           <!-- Edit Devices Ends Here -->
+
+
+
+
+          <!-- Device Information starts here (Modal) -->
+          <div class="modal" id="modalEditForm">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+
+                      <!-- Modal Header -->
+                      <div class="modal-header">
+                          <h4 class="modal-title">Modal Heading</h4>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                          Modal body..
+                      </div>
+
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+
+
           {% endfor %}
       </tbody>
     </table>

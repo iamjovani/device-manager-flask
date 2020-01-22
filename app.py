@@ -203,6 +203,9 @@ def delete(id_data):
         flash("Failed to insert record into table {}".format(error))   
 
 
+
+
+
 @app.route('/users/<string:id_data>', methods = ['GET'])
 def delete_usr(id_data):
     try:

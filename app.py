@@ -175,6 +175,14 @@ def add():
                cur = mysql.connection.cursor()
                cur.execute(st)
                mysql.connection.commit()
+               
+               rpcount = 0
+               cmmt = 'NULL'
+               rp = 'INSERT INTO `repair` (`repair_count`, `serial_number`, `previous_location`, `comment`)' \
+                    'VALUES({}, \"{}\", \"{}\", \"{}\")'.format(rpcount, serialnum ,location, cmmt)
+               
+               cur.execute(rp)
+               mysql.connection.commit()
            return redirect(url_for("dashboard", username=session['username']))
 
        except ValueError as error:
@@ -228,7 +236,7 @@ def delete_usr(id_data):
 def update():
     try:
         if 'loggedin' in session:
-            
+            rp = None
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
             account = cursor.fetchone()
@@ -242,7 +250,7 @@ def update():
                 tablet_type   = request.form['editDeviceType']
                 model         = request.form['editModel']
                 zone          = request.form['editZone']
-                state     = request.form['editCondition']
+                state         = request.form['editCondition']
                 date_added    = request.form['editDateAdded']
                 date_damaged  = request.form['editDateDamaged']
 
@@ -253,15 +261,19 @@ def update():
 
                 cur = mysql.connection.cursor()
                 cur.execute(st)
-                flash("Data Updated Successfully")
                 mysql.connection.commit()
+                
+                if location == 'Repair':
+                    rp = 'UPDATE `repair` SET repair_count= repair_count+1 WHERE serial_number=\"{}\"'.format(serial_number)
+                    cur.execute(rp)
+                    mysql.connection.commit()
+                
+                flash("Data Updated Successfully")
             return redirect(url_for('dashboard', username=session['username']))
         return redirect(url_for('login'))
 
     except ValueError as error:
         flash("Failed to insert record into table {}".format(error))  
-
-
 
 
 @app.route('/users',methods=['GET'])

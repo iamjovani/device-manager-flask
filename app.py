@@ -294,6 +294,22 @@ def users():
 
 
 
+@app.route('/info/<string:id_data>', methods=['GET'])
+def info(id_data):
+    if 'loggedin' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+        account = cursor.fetchone()
+        
+        cursor.execute("SELECT * FROM repair WHERE id = %s", (id_data))
+        info = cursor.fetchone()
+        mysql.connection.commit()
+        return redirect(url_for('dashboard', username=session['username'], info=info))
+    return redirect(url_for('login'))
+
+
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

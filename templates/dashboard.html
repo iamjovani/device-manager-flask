@@ -126,412 +126,425 @@
 
 </div>
   <br>
-  <div class ="container-fluid" style="width: fit-content;" class="table-responsive">
-     <div class="modal fade" id="modalAddForm" tabindex="-1" role="dialog"
-      aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header text-center">
-            <h4 class="modal-title w-100 font-weight-bold">Add Device</h4>
-            <button type="button" class="close" data-dismiss="modal"
-              aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body mx-3">
-
-            <form action="{{ url_for('add') }}" method="post">
-              <!-- Grid row -->
-              <div class="form-row">
-                <!-- Grid column -->
-                <div class="col-md-6">
-                  <!-- Device input -->
-                  <div class="md-form form-group">
-                    <input type="text" class="form-control"
-                      name="inputDeviceName" required
-                      placeholder="BAP-SURF-A01">
-                    <label for="inputDeviceName">Name</label>
+  <div class="container-fluid" style="width: fit-content;" class="table-responsive">
+      <div class="modal fade" id="modalAddForm" tabindex="-1" role="dialog"
+           aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header text-center">
+                      <h4 class="modal-title w-100 font-weight-bold">Add Device</h4>
+                      <button type="button" class="close" data-dismiss="modal"
+                              aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
-                </div>
-                <!-- Grid column -->
+                  <div class="modal-body mx-3">
 
-                <!-- Grid column -->
-                <div class="col-md-6">
-                  <!-- Device input -->
-                  <div class="md-form form-group">
-                    <input type="text" class="form-control"
-                      name="inputSerialNumber" required
-                      placeholder="F10A180602970">
-                    <label for="inputSerialNumber">Serial Number</label>
-                  </div>
-                </div>
-                <!-- Grid column -->
-              </div>
-              <!-- Grid row -->
+                      <form action="{{ url_for('add') }}" method="post">
+                          <!-- Grid row -->
+                          <div class="form-row">
+                              <!-- Grid column -->
+                              <div class="col-md-6">
+                                  <!-- Device input -->
+                                  <div class="md-form form-group">
+                                      <input type="text" class="form-control"
+                                             name="inputDeviceName" required
+                                             placeholder="BAP-SURF-A01">
+                                      <label for="inputDeviceName">Name</label>
+                                  </div>
+                              </div>
+                              <!-- Grid column -->
+                              <!-- Grid column -->
+                              <div class="col-md-6">
+                                  <!-- Device input -->
+                                  <div class="md-form form-group">
+                                      <input type="text" class="form-control"
+                                             name="inputSerialNumber" required
+                                             placeholder="F10A180602970">
+                                      <label for="inputSerialNumber">Serial Number</label>
+                                  </div>
+                              </div>
+                              <!-- Grid column -->
+                          </div>
+                          <!-- Grid row -->
+                          <!-- Grid row -->
+                          <div class="row">
+                              <!-- Grid column -->
+                              <div class="col-md-6">
+                                  <!-- Device input -->
+                                  <div class="md-form form-group">
+                                      <select name="inputLocation" class="form-control">
+                                          <option value="Hagley">Hagley</option>
+                                          <option value="Toyota">Toyota</option>
+                                          <option value="Sabina">Sabina</option>
+                                          <option value="Molynes">Molynes</option>
+                                          <option value="Warehouse">Warehouse</option>
+                                          <option value="Repair">Repair</option>
+                                      </select>
+                                      <label for="inputLocation">Location</label>
+                                  </div>
+                              </div>
 
-              <!-- Grid row -->
-              <div class="row">
-                <!-- Grid column -->
-                <div class="col-md-6">
-                  <!-- Device input -->
-                  <div class="md-form form-group">
-                    <select name="inputLocation" class="form-control">
-                      <option value="Hagley">Hagley</option>
-                      <option value="Toyota">Toyota</option>
-                      <option value="Sabina">Sabina</option>
-                      <option value="Molynes">Molynes</option>
-                      <option value="Warehouse">Warehouse</option>
-                      <option value="Repair">Repair</option>
-                    </select>
-                    <label for="inputLocation">Location</label>
-                  </div>
-                </div>
-
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-6">
-                  <!-- Device input -->
-                  <div class="md-form form-group">
-                    <input type="text" class="form-control"
-                      name="inputOperatingSys" required placeholder="Windows
+                              <!-- Grid column -->
+                              <!-- Grid column -->
+                              <div class="col-md-6">
+                                  <!-- Device input -->
+                                  <div class="md-form form-group">
+                                      <input type="text" class="form-control"
+                                             name="inputOperatingSys" required placeholder="Windows
                       10">
-                    <label for="inputOperatingSys">Operating System</label>
-                  </div>
-                </div>
-                <!-- Grid column -->
-              </div>
-              <!-- Grid row -->
-
-              <!-- Grid row -->
-              <div class="form-row">
-                <!-- Grid column -->
-                <div class="col-md-6">
-                  <!-- Device input -->
-                  <div class="md-form form-group">
-                    <input type="text" class="form-control"
-                      name="inputDeviceType" required placeholder="Microsoft
+                                      <label for="inputOperatingSys">Operating System</label>
+                                  </div>
+                              </div>
+                              <!-- Grid column -->
+                          </div>
+                          <!-- Grid row -->
+                          <!-- Grid row -->
+                          <div class="form-row">
+                              <!-- Grid column -->
+                              <div class="col-md-6">
+                                  <!-- Device input -->
+                                  <div class="md-form form-group">
+                                      <input type="text" class="form-control"
+                                             name="inputDeviceType" required placeholder="Microsoft
                       Surface">
-                    <label for="inputDeviceType">Device Type</label>
-                  </div>
-                </div>
-                <!-- Grid column -->
+                                      <label for="inputDeviceType">Device Type</label>
+                                  </div>
+                              </div>
+                              <!-- Grid column -->
+                              <!-- Grid column -->
+                              <div class="col-md-6">
+                                  <!-- Device input -->
+                                  <div class="md-form form-group">
+                                      <input type="text" class="form-control" name="inputModel"
+                                             required placeholder="Pro 3">
+                                      <label for="inputModel">Model</label>
+                                  </div>
+                              </div>
 
-                <!-- Grid column -->
-                <div class="col-md-6">
-                  <!-- Device input -->
-                  <div class="md-form form-group">
-                    <input type="text" class="form-control" name="inputModel"
-                      required placeholder="Pro 3">
-                    <label for="inputModel">Model</label>
-                  </div>
-                </div>
+                              <div class="col-md-6">
+                                  <!-- Device input -->
+                                  <div class="md-form form-group">
+                                      <input type="text" class="form-control" name="inputZone"
+                                             required placeholder="Zone 1">
+                                      <label for="inputZone">Zone</label>
+                                  </div>
+                              </div>
 
-                <div class="col-md-6">
-                  <!-- Device input -->
-                  <div class="md-form form-group">
-                    <input type="text" class="form-control" name="inputZone"
-                      required placeholder="Zone 1">
-                    <label for="inputZone">Zone</label>
-                  </div>
-                </div>
+                              <div class="col-md-6">
+                                  <!-- Device input -->
+                                  <div class="md-form form-group">
+                                      <input type="text" class="form-control"
+                                             name="inputCondition" required placeholder="Good">
+                                      <label for="inputCondition">Condition</label>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <!-- Device input -->
+                                  <div class="md-form form-group">
+                                      <input type="date" class="form-control"
+                                             name="inputDateAdded" required placeholder="12/12/2012">
+                                      <label for="inputDateAdded">Date Added</label>
+                                  </div>
+                              </div>
 
-                <div class="col-md-6">
-                  <!-- Device input -->
-                  <div class="md-form form-group">
-                    <input type="text" class="form-control"
-                      name="inputCondition" required placeholder="Good">
-                    <label for="inputCondition">Condition</label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <!-- Device input -->
-                  <div class="md-form form-group">
-                    <input type="date" class="form-control"
-                      name="inputDateAdded" required placeholder="12/12/2012">
-                    <label for="inputDateAdded">Date Added</label>
-                  </div>
-                </div>
+                              <div class="col-md-6">
+                                  <!-- Device input -->
+                                  <div class="md-form form-group">
+                                      <input type="date" class="form-control"
+                                             name="inputDateDamaged" required placeholder="06/09/2016">
+                                      <label for="inputDateDamaged">Date Damaged</label>
+                                  </div>
+                              </div>
 
-                <div class="col-md-6">
-                  <!-- Device input -->
-                  <div class="md-form form-group">
-                    <input type="date" class="form-control"
-                      name="inputDateDamaged" required placeholder="06/09/2016">
-                    <label for="inputDateDamaged">Date Damaged</label>
+                              <!-- Grid column -->
+                          </div>
+                          <!-- Grid row -->
+                          <div>
+                              <button class="btn btn-primary">Add Device</button>
+                          </div>
+                      </form>
                   </div>
-                </div>
-
-                <!-- Grid column -->
               </div>
-              <!-- Grid row -->
-              <div>
-                <button class="btn btn-primary">Add Device</button>
-              </div>
-            </form>
           </div>
-        </div>
       </div>
-    </div>
 
-    <!-- Device Table -->
-    <div>
-     <div class="content"><h2 style="width:  1130px;">Dashboard</h2></div>
-    <h4><b>Device Options</b></h4>
-      <div class="col-sm-4">
-        <button type="button" class="btn btn-info add-new" data-toggle="modal"
-          data-target="#modalAddForm"><i class="fa fa-plus"></i> Add New</button>
-        <button type="file" class="btn btn-success add-new" ><i class="fa
-            fa-plus"></i> Import file</button>
+      <!-- Device Table -->
+      <div>
+          <div class="content"><h2 style="width:  1130px;">Dashboard</h2></div>
+          <h4><b>Device Options</b></h4>
+          <div class="col-sm-4">
+              <button type="button" class="btn btn-info add-new" data-toggle="modal"
+                      data-target="#modalAddForm">
+                  <i class="fa fa-plus"></i> Add New
+              </button>
+              <button type="file" class="btn btn-success add-new">
+                  <i class="fa
+            fa-plus"></i> Import file
+              </button>
+          </div>
       </div>
-    </div>
-    <div>
+      <div>
 
-      <div class="row">
+          <div class="row">
 
-        <div class="col-sm-8"><h2><b>Device Details</b></h2></div>
-        <div class="col-sm-4">
-          <form action="{{ url_for('dashboard') }}" method="post">
-            <div class="search-box">
-              <i class="material-icons">&#xE8B6;</i>
-              <input type="text" class="form-control" id="search" value="{{
+              <div class="col-sm-8"><h2><b>Device Details</b></h2></div>
+              <div class="col-sm-4">
+                  <form action="{{ url_for('dashboard') }}" method="post">
+                      <div class="search-box">
+                          <i class="material-icons">&#xE8B6;</i>
+                          <input type="text" class="form-control" id="search" value="{{
                 request.form.search}}" placeholder="Search&hellip;">
-            </div>
-          </form>
-        </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
       </div>
-    </div>
-    <table class="table table-striped table-hover table-bordered table-responsive">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Serial Number</th>
-                <th>Location</th>
-                <th>Operating System</th>
-                <th>Tablet Type</th>
-                <th>Model</th>
-                <th>Zone</th>
-                <th>Condition</th>
-                <th>Date Added <i class="fa fa-sort"></i></th>
-                <th>Date Damaged <i class="fa fa-sort"></i></th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in values %}
-            <tr>
-                <td>{{row['name']}}</td>
-                <td>{{row['serial_number']}}</td>
-                <td>{{row['location']}}</td>
-                <td>{{row['operating_sys']}}</td>
-                <td>{{row['tablet_type']}}</td>
-                <td>{{row['model']}}</td>
-                <td>{{row['zone']}}</td>
-                <td>{{row['state']}}</td>
-                <td>{{row['date_added']}}</td>
-                <td>{{row['date_damaged']}}</td>
-                <td>
-                    <a href="#modalEditForm" class="edit" title="Edit" data-toggle="modal" data-target="#modalEditForm{{row['name']}}">
-                        <i class="material-icons">&#xE254;</i>
-                    </a>
+      <table class="table table-striped table-hover table-bordered table-responsive">
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Serial Number</th>
+                  <th>Location</th>
+                  <th>Operating System</th>
+                  <th>Tablet Type</th>
+                  <th>Model</th>
+                  <th>Zone</th>
+                  <th>Condition</th>
+                  <th>Date Added <i class="fa fa-sort"></i></th>
+                  <th>Date Damaged <i class="fa fa-sort"></i></th>
+                  <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for row in values %}
+              <tr>
+                  <td>{{row['name']}}</td>
+                  <td>{{row['serial_number']}}</td>
+                  <td>{{row['location']}}</td>
+                  <td>{{row['operating_sys']}}</td>
+                  <td>{{row['tablet_type']}}</td>
+                  <td>{{row['model']}}</td>
+                  <td>{{row['zone']}}</td>
+                  <td>{{row['state']}}</td>
+                  <td>{{row['date_added']}}</td>
+                  <td>{{row['date_damaged']}}</td>
+                  <td>
+                      <a href="#modalEditForm" class="edit" title="Edit" data-toggle="modal" data-target="#modalEditForm{{row['name']}}">
+                          <i class="material-icons">&#xE254;</i>
+                      </a>
 
 
-                    <a href="#modalInfoForm" class="info" title="Info" data-toggle="modal" data-target="#modalEditForm">
-                        <!--modal: modalInfoForm does not exists yet -->
-                        <i class="material-icons" style="font-size:20px; color:#03A9F4;">info_outline</i>
-                    </a>
+                      <a href="#modalInfoForm" class="info" title="Info" data-toggle="modal" data-target="#modalEditForm{{row['name']}}">
+                          <!--modal: modalInfoForm does not exists yet -->
+                          <i class="material-icons" style="font-size:20px; color:#03A9F4;">info_outline</i>
+                      </a>
 
-                    <a href="/dashboard/{{ row['serial_number'] }}" onclick="return confirm('Are You Sure You Want To Delete {{row['name']}}?')" class="delete" title="Delete" data-toggle="tooltip">
-                        <i class="material-icons">&#xE872;</i>
-                    </a>
-                </td>
-            </tr>
+                      <a href="/dashboard/{{ row['serial_number'] }}" onclick="return confirm('Are You Sure You Want To Delete {{row['name']}}?')" class="delete" title="Delete" data-toggle="tooltip">
+                          <i class="material-icons">&#xE872;</i>
+                      </a>
+                  </td>
+              </tr>
 
-            <!-- Edit Devices Starts Here -->
-            <div class="modal fade" id="modalEditForm{{row['name']}}" tabindex="-1" role="dialog"
-                 aria-labelledby="myEditModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header text-center">
-                            <h4 class="modal-title w-100 font-weight-bold">Add Device</h4>
-                            <button type="button" class="close" data-dismiss="modal"
-                                    aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body mx-3">
+              <!-- Edit Devices Starts Here -->
+              <div class="modal fade" id="modalEditForm{{row['name']}}" tabindex="-1" role="dialog"
+                   aria-labelledby="myEditModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header text-center">
+                              <h4 class="modal-title w-100 font-weight-bold">Add Device</h4>
+                              <button type="button" class="close" data-dismiss="modal"
+                                      aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body mx-3">
 
-                            <form action="{{ url_for('update') }}" method="post">
-                                <!-- Grid row -->
-                                <div class="form-row">
-                                    <!-- Grid column -->
-                                    <div class="col-md-6">
-                                        <!-- Device input -->
-                                        <div class="md-form form-group">
-                                            <input type="text" class="form-control"
-                                                   name="editDeviceName" required
-                                                   placeholder="BAP-SURF-A01" value="{{row['name']}}">
-                                            <label for="editDeviceName">Name</label>
-                                        </div>
-                                    </div>
-                                    <!-- Grid column -->
-                                    <!-- Grid column -->
-                                    <div class="col-md-6">
-                                        <!-- Device input -->
-                                        <div class="md-form form-group">
-                                            <input type="text" class="form-control"
-                                                   name="editSerialNumber" required
-                                                   placeholder="F10A180602970" value="{{row['serial_number']}}">
-                                            <label for="editSerialNumber">Serial Number</label>
-                                        </div>
-                                    </div>
-                                    <!-- Grid column -->
-                                </div>
-                                <!-- Grid row -->
-                                <!-- Grid row -->
-                                <div class="row">
-                                    <!-- Grid column -->
-                                    <div class="col-md-6">
-                                        <!-- Device input -->
-                                        <div class="md-form form-group">
-                                            <select name="editLocation" class="form-control">
-                                                <option value="Hagley" {% if row['location']=='Hagley' %} selected="selected" {% endif %}>Hagley</option>
-                                                <option value="Toyota" {% if row['location']=='Toyota' %} selected="selected" {% endif %}>Toyota</option>
-                                                <option value="Sabina" {% if row['location']=='Sabina' %} selected="selected" {% endif %}>Sabina</option>
-                                                <option value="Molynes" {% if row['location']=='Molynes' %} selected="selected" {% endif %}>Molynes</option>
-                                                <option value="Warehouse" {% if row['location']=='Warehouse' %} selected="selected" {% endif %}>Warehouse</option>
-                                                <option value="Repair">Repair</option>
-                                            </select>
-                                            <label for="editLocation">Location</label>
-                                        </div>
-                                    </div>
+                              <form action="{{ url_for('update') }}" method="post">
+                                  <!-- Grid row -->
+                                  <div class="form-row">
+                                      <!-- Grid column -->
+                                      <div class="col-md-6">
+                                          <!-- Device input -->
+                                          <div class="md-form form-group">
+                                              <input type="text" class="form-control"
+                                                     name="editDeviceName" required
+                                                     placeholder="BAP-SURF-A01" value="{{row['name']}}">
+                                              <label for="editDeviceName">Name</label>
+                                          </div>
+                                      </div>
+                                      <!-- Grid column -->
+                                      <!-- Grid column -->
+                                      <div class="col-md-6">
+                                          <!-- Device input -->
+                                          <div class="md-form form-group">
+                                              <input type="text" class="form-control"
+                                                     name="editSerialNumber" required
+                                                     placeholder="F10A180602970" value="{{row['serial_number']}}">
+                                              <label for="editSerialNumber">Serial Number</label>
+                                          </div>
+                                      </div>
+                                      <!-- Grid column -->
+                                  </div>
+                                  <!-- Grid row -->
+                                  <!-- Grid row -->
+                                  <div class="row">
+                                      <!-- Grid column -->
+                                      <div class="col-md-6">
+                                          <!-- Device input -->
+                                          <div class="md-form form-group">
+                                              <select name="editLocation" class="form-control">
+                                                  <option value="Hagley" {% if row['location']=='Hagley' %} selected="selected" {% endif %}>Hagley</option>
+                                                  <option value="Toyota" {% if row['location']=='Toyota' %} selected="selected" {% endif %}>Toyota</option>
+                                                  <option value="Sabina" {% if row['location']=='Sabina' %} selected="selected" {% endif %}>Sabina</option>
+                                                  <option value="Molynes" {% if row['location']=='Molynes' %} selected="selected" {% endif %}>Molynes</option>
+                                                  <option value="Warehouse" {% if row['location']=='Warehouse' %} selected="selected" {% endif %}>Warehouse</option>
+                                                  <option value="Repair">Repair</option>
+                                              </select>
+                                              <label for="editLocation">Location</label>
+                                          </div>
+                                      </div>
 
-                                    <!-- Grid column -->
-                                    <!-- Grid column -->
-                                    <div class="col-md-6">
-                                        <!-- Device input -->
-                                        <div class="md-form form-group">
-                                            <input type="text" class="form-control"
-                                                   name="editOperatingSys" required placeholder="Windows 10" value="{{row['operating_sys']}}">
-                                            <label for="editOperatingSys">Operating System</label>
-                                        </div>
-                                    </div>
-                                    <!-- Grid column -->
-                                </div>
-                                <!-- Grid row -->
-                                <!-- Grid row -->
-                                <div class="form-row">
-                                    <!-- Grid column -->
-                                    <div class="col-md-6">
-                                        <!-- Device input -->
-                                        <div class="md-form form-group">
-                                            <input type="text" class="form-control"
-                                                   name="editDeviceType" required placeholder="Microsoft Surface" value="{{row['tablet_type']}}">
-                                            <label for="editDeviceType">Device Type</label>
-                                        </div>
-                                    </div>
-                                    <!-- Grid column -->
-                                    <!-- Grid column -->
-                                    <div class="col-md-6">
-                                        <!-- Device input -->
-                                        <div class="md-form form-group">
-                                            <input type="text" class="form-control" name="editModel"
-                                                   required placeholder="Pro 3" value="{{row['model']}}">
-                                            <label for="editModel">Model</label>
-                                        </div>
-                                    </div>
+                                      <!-- Grid column -->
+                                      <!-- Grid column -->
+                                      <div class="col-md-6">
+                                          <!-- Device input -->
+                                          <div class="md-form form-group">
+                                              <input type="text" class="form-control"
+                                                     name="editOperatingSys" required placeholder="Windows 10" value="{{row['operating_sys']}}">
+                                              <label for="editOperatingSys">Operating System</label>
+                                          </div>
+                                      </div>
+                                      <!-- Grid column -->
+                                  </div>
+                                  <!-- Grid row -->
+                                  <!-- Grid row -->
+                                  <div class="form-row">
+                                      <!-- Grid column -->
+                                      <div class="col-md-6">
+                                          <!-- Device input -->
+                                          <div class="md-form form-group">
+                                              <input type="text" class="form-control"
+                                                     name="editDeviceType" required placeholder="Microsoft Surface" value="{{row['tablet_type']}}">
+                                              <label for="editDeviceType">Device Type</label>
+                                          </div>
+                                      </div>
+                                      <!-- Grid column -->
+                                      <!-- Grid column -->
+                                      <div class="col-md-6">
+                                          <!-- Device input -->
+                                          <div class="md-form form-group">
+                                              <input type="text" class="form-control" name="editModel"
+                                                     required placeholder="Pro 3" value="{{row['model']}}">
+                                              <label for="editModel">Model</label>
+                                          </div>
+                                      </div>
 
-                                    <div class="col-md-6">
-                                        <!-- Device input -->
-                                        <div class="md-form form-group">
-                                            <input type="text" class="form-control" name="editZone"
-                                                   required placeholder="Zone 1" value="{{row['zone']}}">
-                                            <label for="editZone">Zone</label>
-                                        </div>
-                                    </div>
+                                      <div class="col-md-6">
+                                          <!-- Device input -->
+                                          <div class="md-form form-group">
+                                              <input type="text" class="form-control" name="editZone"
+                                                     required placeholder="Zone 1" value="{{row['zone']}}">
+                                              <label for="editZone">Zone</label>
+                                          </div>
+                                      </div>
 
-                                    <div class="col-md-6">
-                                        <!-- Device input -->
-                                        <div class="md-form form-group">
-                                            <input type="text" class="form-control"
-                                                   name="editCondition" required placeholder="Good" value="{{row['state']}}">
-                                            <label for="editCondition">Condition</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <!-- Device input -->
-                                        <div class="md-form form-group">
-                                            <input type="date" class="form-control"
-                                                   name="editDateAdded" required placeholder="12/12/2012" value="{{row['date_added']}}">
-                                            <label for="editDateAdded">Date Added</label>
-                                        </div>
-                                    </div>
+                                      <div class="col-md-6">
+                                          <!-- Device input -->
+                                          <div class="md-form form-group">
+                                              <input type="text" class="form-control"
+                                                     name="editCondition" required placeholder="Good" value="{{row['state']}}">
+                                              <label for="editCondition">Condition</label>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <!-- Device input -->
+                                          <div class="md-form form-group">
+                                              <input type="date" class="form-control"
+                                                     name="editDateAdded" required placeholder="12/12/2012" value="{{row['date_added']}}">
+                                              <label for="editDateAdded">Date Added</label>
+                                          </div>
+                                      </div>
 
-                                    <div class="col-md-6">
-                                        <!-- Device input -->
-                                        <div class="md-form form-group">
-                                            <input type="date" class="form-control"
-                                                   name="editDateDamaged" required placeholder="06/09/2016" value="{{row['date_damaged']}}">
-                                            <label for="editDateDamaged">Date Damaged</label>
-                                        </div>
-                                    </div>
+                                      <div class="col-md-6">
+                                          <!-- Device input -->
+                                          <div class="md-form form-group">
+                                              <input type="date" class="form-control"
+                                                     name="editDateDamaged" required placeholder="06/09/2016" value="{{row['date_damaged']}}">
+                                              <label for="editDateDamaged">Date Damaged</label>
+                                          </div>
+                                      </div>
 
-                                    <!-- Grid column -->
-                                </div>
-                                <!-- Grid row -->
-                                <div>
-                                    <button class="btn btn-primary">Update Device</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Edit Devices Ends Here -->
+                                      <!-- Grid column -->
+                                  </div>
+                                  <!-- Grid row -->
+                                  <div>
+                                      <button class="btn btn-primary">Update Device</button>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- Edit Devices Ends Here -->
 
-        </tbody>
-        <!-- Device Information starts here (Modal) -->
-        <form action="{{ url_for('update') }}" method="post">
-            <div class="modal" id="modalEditForm">
-                <div class="modal-dialog">
-                    <div class="modal-content">
+          </tbody>
 
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Modal Heading</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
+          {% endfor %}
+      </table>
 
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                       
 
-                        </div>
 
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
+      <!-- Device Information starts here (Modal) -->
+      <form action="{{ url_for('info') }}" method="post">
+          <div class="modal" id="modalInfoForm">
+              <div class="modal-dialog">
+                  <div class="modal-content">
 
-                    </div>
-                </div>
-            </div>
-        </form>
-            {% endfor %}
-    </table>
-    <div class="clearfix">
-      <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-      <ul class="pagination">
-        <li class="page-item disabled"><a href="#"><i class="fa
-              fa-angle-double-left"></i></a></li>
-        <li class="page-item"><a href="#" class="page-link">1</a></li>
-        <li class="page-item"><a href="#" class="page-link">2</a></li>
-        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-        <li class="page-item"><a href="#" class="page-link">4</a></li>
-        <li class="page-item"><a href="#" class="page-link">5</a></li>
-        <li class="page-item"><a href="#" class="page-link"><i class="fa
-              fa-angle-double-right"></i></a></li>
-      </ul>
-    </div>
-           
-  {% endblock %}
+                      <!-- Modal Header -->
+                      <div class="modal-header">
+                          <h4 class="modal-title">Modal Heading</h4>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                          <p>{{info['repair_count']}} </p>
+
+                      </div>
+
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+      </form>
+
+
+      <div class="clearfix">
+          <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+          <ul class="pagination">
+              <li class="page-item disabled">
+                  <a href="#">
+                      <i class="fa
+              fa-angle-double-left"></i>
+                  </a>
+              </li>
+              <li class="page-item"><a href="#" class="page-link">1</a></li>
+              <li class="page-item"><a href="#" class="page-link">2</a></li>
+              <li class="page-item active"><a href="#" class="page-link">3</a></li>
+              <li class="page-item"><a href="#" class="page-link">4</a></li>
+              <li class="page-item"><a href="#" class="page-link">5</a></li>
+              <li class="page-item">
+                  <a href="#" class="page-link">
+                      <i class="fa
+              fa-angle-double-right"></i>
+                  </a>
+              </li>
+          </ul>
+      </div>
+
+      {% endblock %}

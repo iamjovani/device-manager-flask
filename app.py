@@ -5,6 +5,7 @@ import re
 from datetime import timedelta
 from flask import session, app
 from flask.helpers import flash
+#from flask_mail import Mail
 #import bcrypt --- for encrypting password 
 
 #import pandas as pd
@@ -22,7 +23,7 @@ app.config['MYSQL_DB'] = 'deviceManager'
 
 # Intialize MySQL
 mysql = MySQL(app)
-
+#mail = Mail(app)
 
 @app.before_request
 def make_session_permanent(): #Session expires after 5 mins
@@ -141,6 +142,12 @@ def dashboard():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
         account = cursor.fetchone()
+        
+        if account['role'] == 'normal':
+            stmt = 'SELECT * FROM devices WHERE location=\"{}\"'.format(account['location'])
+            cursor.execute(stmt)
+            data = cursor.fetchall()
+            return render_template('dashboard-user.html', username=session['username'], values=data)
         #Load table
         cursor.execute('SELECT * FROM devices')
         data = cursor.fetchall()
@@ -294,7 +301,7 @@ def users():
 
 
 
-@app.route('/info/<string:id_data>', methods=['GET'])
+@app.route('/info/<string:id_data>', methods=['GET', 'POST'])
 def info(id_data):
     if 'loggedin' in session:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)

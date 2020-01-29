@@ -5,12 +5,14 @@ import re
 from datetime import timedelta
 from flask import session, app
 from flask.helpers import flash
-#from flask_mail import Mail
+from flask_mail import Mail
 #import bcrypt --- for encrypting password 
 
 #import pandas as pd
 
 app = Flask(__name__, template_folder="templates")
+
+
 
 # Change this to your secret key (can be anything, it's for extra protection)
 app.secret_key = 'your secret key'
@@ -21,9 +23,20 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'deviceManager'
 
+
+app.config.update(dict(
+    DEBUG = True,
+    MAIL_SERVER = 'smtp.gmail.com',
+    MAIL_PORT = 587,
+    MAIL_USE_TLS = True,
+    MAIL_USE_SSL = False,
+    MAIL_USERNAME = 'mullingsatberts@gmail.com',
+    MAIL_PASSWORD = '!@autoparts12',
+))
+
 # Intialize MySQL
 mysql = MySQL(app)
-#mail = Mail(app)
+mail = Mail(app)
 
 @app.before_request
 def make_session_permanent(): #Session expires after 5 mins
@@ -147,12 +160,14 @@ def dashboard():
             stmt = 'SELECT * FROM devices WHERE location=\"{}\"'.format(account['location'])
             cursor.execute(stmt)
             data = cursor.fetchall()
-            return render_template('dashboard-user.html', username=session['username'], values=data)
+            length = len(data)
+            return render_template('dashboard-user.html', username=session['username'], values=data, length=length)
         #Load table
         cursor.execute('SELECT * FROM devices')
         data = cursor.fetchall()
+        length = len(data)
         # Show the profile page with 
-        return render_template('dashboard.html', username=session['username'], values=data) # values not transmitting to table
+        return render_template('dashboard.html', username=session['username'], values=data, length=length) # values not transmitting to table
     return redirect(url_for('login'))
 
 
@@ -300,13 +315,14 @@ def users():
     return redirect(url_for('login'))
 
 
-
+#Working well! (not a view function)
 @app.route('/info/<string:id_data>', methods=['GET', 'POST'])
 def info(id_data):
     if 'loggedin' in session:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
         account = cursor.fetchone()
+    
         
         cursor.execute("SELECT * FROM repair WHERE id = %s", (id_data))
         info = cursor.fetchone()
@@ -315,6 +331,22 @@ def info(id_data):
     return redirect(url_for('login'))
 
 
+
+#incomplete
+@app.route('/email/<string:id_data>',  methods=['POST'])
+def email(id_data):
+    if 'loggedin' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+        account = cursor.fetchone()
+
+         if request.method == "POST":
+                damage = request.form['DamageReport']
+            
+        
+        cursor.execute("SELECT * FROM devices WHERE name = %s", (id_data))
+        
+        #needed, name, location and 
 
 
 @app.errorhandler(404)

@@ -5,12 +5,13 @@
 {% block content %}
 <h2>Home Page</h2>
 <p>Welcome back, {{ username }}!</p>
-<div style="width: 460px; float:left; height:250px; margin:10px">
+<div onclick="location.href='{{ url_for('dashboard') }}';" style="width: 460px; float:left; height:250px; margin:10px; cursor: pointer;">
 <h2 style="border-bottom: 0px;"><b>Dashboard</b></h2>
 <i class="fas fa-tablet-alt fa-6x align-middle"></i>
 </div>
 <div style="width: 460px; float:left; height:250px; margin:10px">
 <h2 style="border-bottom: 0px;"><b>Second DIV</b></h2>
+
 </div>
 
 <div style="width: 460px; float:left; height:250px; margin:10px">

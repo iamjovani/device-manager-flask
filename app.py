@@ -344,26 +344,29 @@ def info(id_data):
 
 
 
-#incomplete
-@app.route('/email/<string:id_data>',  methods=['GET','POST'])
+#working but not well
+@app.route('/email/<string:id_data>',  methods=['POST', 'GET'])
 def email(id_data):
     if 'loggedin' in session:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
         account = cursor.fetchone()
-
-        if request.method == 'POST':
-            damage = request.form['DamageReport']
-        
+            
         cursor.execute("SELECT * FROM devices WHERE serial_number = %s", (id_data,))
         data = cursor.fetchone()
         #needed, name, location and 
 
         location = data['location']
         
-    
-        DamagedReport(id_data, location, 'Broken')
+        if request.method == 'POST':
+            damage = request.form['DamageReport'] # not recieving a value
+            #email sendingh working can be tested by sending a string instead of trying to retieved value direclty form html form
+        DamagedReport(id_data, location, damage)
         
+        return redirect(url_for('dashboard', username=session['username']))
+    return redirect(url_for('login'))
+    
+    
         
 @app.errorhandler(404)
 def page_not_found(e):

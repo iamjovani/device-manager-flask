@@ -5,24 +5,20 @@ import re
 from datetime import timedelta
 from flask import session, app
 from flask.helpers import flash
-from flask_mail import Mail
+from flask_mail import Mail, Message
+from flask import jsonify
+from mail import DamagedReport
 #import bcrypt --- for encrypting password 
 
 #import pandas as pd
 
 app = Flask(__name__, template_folder="templates")
 
-
-
-# Change this to your secret key (can be anything, it's for extra protection)
-app.secret_key = 'your secret key'
-
 # Enter your database connection details below
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'deviceManager'
-
 
 app.config.update(dict(
     DEBUG = True,
@@ -34,9 +30,25 @@ app.config.update(dict(
     MAIL_PASSWORD = '!@autoparts12',
 ))
 
+
+# Change this to your secret key (can be anything, it's for extra protection)
+app.secret_key = 'your secret key'
+
+
+def DamagedReport(name, location, damage):
+    with app.app_context():
+        msg = Message(subject="Damaged Report!",
+                      sender=app.config.get("MAIL_USERNAME"),
+                      recipients=["zlatanjr08@gmail.com"], # replace with your email for testing
+                      body="The following tablet {} from {} has been reported with a {} issue.".format(name, location, damage ))
+        mail.send(msg)
+    return jsonify({'message': 'Your message has been sent successfully'}), 200
+
 # Intialize MySQL
 mysql = MySQL(app)
 mail = Mail(app)
+
+
 
 @app.before_request
 def make_session_permanent(): #Session expires after 5 mins
@@ -324,7 +336,7 @@ def info(id_data):
         account = cursor.fetchone()
     
         
-        cursor.execute("SELECT * FROM repair WHERE id = %s", (id_data))
+        cursor.execute("SELECT * FROM repair WHERE repair_id = %s", (id_data,))
         info = cursor.fetchone()
         mysql.connection.commit()
         return redirect(url_for('dashboard', username=session['username'], info=info))
@@ -333,22 +345,26 @@ def info(id_data):
 
 
 #incomplete
-@app.route('/email/<string:id_data>',  methods=['POST'])
+@app.route('/email/<string:id_data>',  methods=['GET','POST'])
 def email(id_data):
     if 'loggedin' in session:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
         account = cursor.fetchone()
 
-         if request.method == "POST":
-                damage = request.form['DamageReport']
-            
+        if request.method == 'POST':
+            damage = request.form['DamageReport']
         
-        cursor.execute("SELECT * FROM devices WHERE name = %s", (id_data))
-        
+        cursor.execute("SELECT * FROM devices WHERE serial_number = %s", (id_data,))
+        data = cursor.fetchone()
         #needed, name, location and 
 
-
+        location = data['location']
+        
+    
+        DamagedReport(id_data, location, 'Broken')
+        
+        
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

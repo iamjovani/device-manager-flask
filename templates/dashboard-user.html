@@ -353,7 +353,7 @@
               <!-- Edit Devices Ends Here -->
 
 
-            <form action="{{ url_for('email') }}" method="post">
+            <form  method="post">
               <div class="modal fade" id="modalInfoForm{{row['name']}}" tabindex="-1" role="dialog">
                   <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -364,12 +364,15 @@
                               </button>
                           </div>
                           <div class="modal-body">
-                           <label for="DamageReport">DamageReport</label>
+                           <label for="DamageReport">Damage Report</label>
                               <input type="text" class="form-control"
                                                      name="DamageReport" required placeholder="Cracked Screen">
                           </div>
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-primary">Send Report</button>
+                               <a href="/email/{{ row['serial_number'] }}"  title="SendReport" data-toggle="tooltip" class="btn btn-primary">
+                                   Send Report
+                               </a>
+                              
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                           </div>
                       </div>
@@ -386,7 +389,7 @@
 
 
       <div class="clearfix">
-          <div class="hint-text">Showing <b>{{length}}</b> out of <b>25</b> entries</div>
+          <div class="hint-text">Showing <b>{{length}}</b> out of <b>{{length}}</b> entries</div>
           <ul class="pagination">
               <li class="page-item disabled">
                   <a href="#">

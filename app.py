@@ -1,40 +1,20 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-from flask_mysqldb import MySQL
-import MySQLdb.cursors
-import re
-from datetime import timedelta
-from flask import session, app
-from flask.helpers import flash
-from flask_mail import Mail, Message
-from flask import jsonify
-from mail import DamagedReport
-#import bcrypt --- for encrypting password 
+from core import app
+from core import request
+from core import Flask
+from core import MySQLdb
+from core import url_for
+from core import render_template
+from core import redirect
+from core import session
+from core import timedelta
+from core import mysql
+from core import flash
+from core import Message
+from core import Mail
+from core import mail
+from core import jsonify 
 
-#import pandas as pd
-
-app = Flask(__name__, template_folder="templates")
-
-# Enter your database connection details below
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'deviceManager'
-
-app.config.update(dict(
-    DEBUG = True,
-    MAIL_SERVER = 'smtp.gmail.com',
-    MAIL_PORT = 587,
-    MAIL_USE_TLS = True,
-    MAIL_USE_SSL = False,
-    MAIL_USERNAME = 'mullingsatberts@gmail.com',
-    MAIL_PASSWORD = '!@autoparts12',
-))
-
-
-# Change this to your secret key (can be anything, it's for extra protection)
-app.secret_key = 'your secret key'
-
-
+#sends email
 def DamagedReport(name, location, damage):
     with app.app_context():
         msg = Message(subject="Damaged Report!",
@@ -43,10 +23,6 @@ def DamagedReport(name, location, damage):
                       body="The following tablet {} from {} has been reported with a {} issue.".format(name, location, damage ))
         mail.send(msg)
     return jsonify({'message': 'Your message has been sent successfully'}), 200
-
-# Intialize MySQL
-mysql = MySQL(app)
-mail = Mail(app)
 
 
 
@@ -160,7 +136,7 @@ def profile():
 
 
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET'])
 def dashboard():
     if 'loggedin' in session:
         # We need all the account info for the user so we can display it on the profile page
@@ -225,9 +201,7 @@ def add():
   return redirect(url_for('login'))
        
 
-
-      
-           
+       
 @app.route('/dashboard/<string:id_data>', methods = ['GET'])        
 def delete(id_data):
     try:
@@ -243,8 +217,6 @@ def delete(id_data):
        
     except ValueError as error:
         flash("Failed to insert record into table {}".format(error))   
-
-
 
 
 
@@ -342,11 +314,13 @@ def info(id_data):
         return redirect(url_for('dashboard', username=session['username'], info=info))
     return redirect(url_for('login'))
 
-
-
+            
 #working but not well
 @app.route('/email/<string:id_data>',  methods=['POST', 'GET'])
 def email(id_data):
+    
+    damage = None
+    
     if 'loggedin' in session:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
@@ -361,6 +335,7 @@ def email(id_data):
         if request.method == 'POST':
             damage = request.form['DamageReport'] # not recieving a value
             #email sendingh working can be tested by sending a string instead of trying to retieved value direclty form html form
+            
         DamagedReport(id_data, location, damage)
         
         return redirect(url_for('dashboard', username=session['username']))

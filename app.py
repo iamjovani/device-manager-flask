@@ -285,11 +285,11 @@ def update():
                 rp = 'UPDATE `repair` SET repair_count= repair_count+1 WHERE serial_number=\"{}\"'.format(serial_number)
                 rp1 = 'UPDATE `repair` SET damage_report=\"{}\" WHERE serial_number=\"{}\"'.format(damageDes, serial_number)
                 email(serial_number, damageDes)
+               #notification = "alert(\'Email sent successfully!\')"
                 cur.execute(rp)
                 mysql.connection.commit()
-                flash("Data Updated Successfully")            
             
-            return redirect(url_for('dashboard', username=session['username']))
+            return redirect(url_for('dashboard-user', username=session['username']))
         return redirect(url_for('login'))
 
     except ValueError as error:
@@ -341,8 +341,7 @@ def email(id_data, damage):
         #needed, name, location and 
         location = data['location']
         DamagedReport(id_data, location, damage)
-        
-        return redirect(url_for('dashboard', username=session['username']))
+        return redirect(url_for('dashboard-user', username=session['username']))
     return redirect(url_for('login'))
     
     

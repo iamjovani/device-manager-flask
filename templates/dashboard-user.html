@@ -197,12 +197,8 @@
                   <td>{{row['date_added']}}</td>
                   <td>{{row['date_damaged']}}</td>
                   <td>
-                      <a href="#modalEditForm" class="edit" title="Edit" data-toggle="modal" data-target="#modalEditForm{{row['name']}}">
-                          <i class="material-icons">&#xE254;</i>
-                      </a>
-
-
-                      <a href="#modalInfoForm" class="info" title="Info" data-toggle="modal" data-target="#modalInfoForm{{row['name']}}">
+                     
+                      <a href="#modalEditForm" class="edit" title="edit" data-toggle="modal" data-target="#modalEditForm{{row['name']}}">
                           <!--modal: modalInfoForm does not exists yet -->
                           <i class="material-icons" style="font-size:20px; color:#03A9F4;">info_outline</i>
                       </a>
@@ -233,7 +229,7 @@
                                           <div class="md-form form-group">
                                               <input type="text" class="form-control"
                                                      name="editDeviceName" required
-                                                     placeholder="BAP-SURF-A01" value="{{row['name']}}">
+                                                     placeholder="BAP-SURF-A01" value="{{row['name']}}" readonly>
                                               <label for="editDeviceName">Name</label>
                                           </div>
                                       </div>
@@ -244,7 +240,7 @@
                                           <div class="md-form form-group">
                                               <input type="text" class="form-control"
                                                      name="editSerialNumber" required
-                                                     placeholder="F10A180602970" value="{{row['serial_number']}}">
+                                                     placeholder="F10A180602970" value="{{row['serial_number']}}" readonly>
                                               <label for="editSerialNumber">Serial Number</label>
                                           </div>
                                       </div>
@@ -254,28 +250,21 @@
                                   <!-- Grid row -->
                                   <div class="row">
                                       <!-- Grid column -->
-                                      <div class="col-md-6">
-                                          <!-- Device input -->
-                                          <div class="md-form form-group">
-                                              <select name="editLocation" class="form-control">
-                                                  <option value="Hagley" {% if row['location']=='Hagley' %} selected="selected" {% endif %}>Hagley</option>
-                                                  <option value="Toyota" {% if row['location']=='Toyota' %} selected="selected" {% endif %}>Toyota</option>
-                                                  <option value="Sabina" {% if row['location']=='Sabina' %} selected="selected" {% endif %}>Sabina</option>
-                                                  <option value="Molynes" {% if row['location']=='Molynes' %} selected="selected" {% endif %}>Molynes</option>
-                                                  <option value="Warehouse" {% if row['location']=='Warehouse' %} selected="selected" {% endif %}>Warehouse</option>
-                                                  <option value="Repair">Repair</option>
-                                              </select>
-                                              <label for="editLocation">Location</label>
+                                    <div class="col-md-6">
+                                       <div class="md-form form-group">
+                                              <input type="text" class="form-control"
+                                                     name="location" required
+                                                      value="{{row['location']}}" readonly>
+                                              <label for="location">Location</label>
                                           </div>
-                                      </div>
-
+                                    </div>
                                       <!-- Grid column -->
                                       <!-- Grid column -->
                                       <div class="col-md-6">
                                           <!-- Device input -->
                                           <div class="md-form form-group">
                                               <input type="text" class="form-control"
-                                                     name="editOperatingSys" required placeholder="Windows 10" value="{{row['operating_sys']}}">
+                                                     name="editOperatingSys" required placeholder="Windows 10" value="{{row['operating_sys']}}" readonly>
                                               <label for="editOperatingSys">Operating System</label>
                                           </div>
                                       </div>
@@ -289,7 +278,7 @@
                                           <!-- Device input -->
                                           <div class="md-form form-group">
                                               <input type="text" class="form-control"
-                                                     name="editDeviceType" required placeholder="Microsoft Surface" value="{{row['tablet_type']}}">
+                                                     name="editDeviceType" required placeholder="Microsoft Surface" value="{{row['tablet_type']}}" readonly>
                                               <label for="editDeviceType">Device Type</label>
                                           </div>
                                       </div>
@@ -299,7 +288,7 @@
                                           <!-- Device input -->
                                           <div class="md-form form-group">
                                               <input type="text" class="form-control" name="editModel"
-                                                     required placeholder="Pro 3" value="{{row['model']}}">
+                                                     required placeholder="Pro 3" value="{{row['model']}}" readonly>
                                               <label for="editModel">Model</label>
                                           </div>
                                       </div>
@@ -308,7 +297,7 @@
                                           <!-- Device input -->
                                           <div class="md-form form-group">
                                               <input type="text" class="form-control" name="editZone"
-                                                     required placeholder="Zone 1" value="{{row['zone']}}">
+                                                     required placeholder="Zone 1" value="{{row['zone']}}" readonly>
                                               <label for="editZone">Zone</label>
                                           </div>
                                       </div>
@@ -317,7 +306,7 @@
                                           <!-- Device input -->
                                           <div class="md-form form-group">
                                               <input type="text" class="form-control"
-                                                     name="editCondition" required placeholder="Good" value="{{row['state']}}">
+                                                     name="editCondition" required placeholder="Good" value="{{row['state']}}" readonly>
                                               <label for="editCondition">Condition</label>
                                           </div>
                                       </div>
@@ -325,17 +314,17 @@
                                           <!-- Device input -->
                                           <div class="md-form form-group">
                                               <input type="date" class="form-control"
-                                                     name="editDateAdded" required placeholder="12/12/2012" value="{{row['date_added']}}">
+                                                     name="editDateAdded" required placeholder="12/12/2012" value="{{row['date_added']}}" readonly>
                                               <label for="editDateAdded">Date Added</label>
                                           </div>
                                       </div>
-
-                                      <div class="col-md-6">
+                                      
+                                       <div class="col-md-6">
                                           <!-- Device input -->
                                           <div class="md-form form-group">
-                                              <input type="date" class="form-control"
-                                                     name="editDateDamaged" required placeholder="06/09/2016" value="{{row['date_damaged']}}">
-                                              <label for="editDateDamaged">Date Damaged</label>
+                                            <input type="text" class="form-control"
+                                                     name="damageReport" required placeholder="Broken Screen" >
+                                              <label for="damageReport">Damage Report</label>
                                           </div>
                                       </div>
 
@@ -343,7 +332,7 @@
                                   </div>
                                   <!-- Grid row -->
                                   <div>
-                                      <button class="btn btn-primary">Update Device</button>
+                                      <button class="btn btn-primary">Send Report</button>
                                   </div>
                               </form>
                           </div>
@@ -351,39 +340,10 @@
                   </div>
               </div>
               <!-- Edit Devices Ends Here -->
-
-
-            <form  method="POST">
-              <div class="modal fade" id="modalInfoForm{{row['name']}}" tabindex="-1" role="dialog">
-                  <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h5 class="modal-title">Modal title</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-                          <div class="modal-body">
-                           <label for="DamageReport">Damage Report</label>
-                              <input type="text" class="form-control"
-                                                     name="DamageReport" required placeholder="Cracked Screen">
-                          </div>
-                          <div class="modal-footer">
-                               <a href="/email/{{ row['serial_number'] }}"  title="SendReport" data-toggle="tooltip" class="btn btn-primary">
-                                   Send Report
-                               </a>
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-            </form>
           </tbody>
 
           {% endfor %}
       </table>
-
-
 
 
 

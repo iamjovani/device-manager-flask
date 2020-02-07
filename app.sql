@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `repair`
     `repair_count`  	varchar(5)   NOT NULL,
     `serial_number` 	varchar(13)  NOT NULL,
     `previous_location` varchar(13)  NOT NULL,
+    `damage_report`     varchar(50),
     `comment`			varchar(100),
     PRIMARY KEY (`repair_id`),
     FOREIGN KEY (`serial_number`) references `devices`(`serial_number`)
@@ -48,6 +49,6 @@ VALUES('BAP-WKS-A15', '14597887685', 'Molynes', 'Windows 10', 'Microsoft Surface
 INSERT INTO `devices`  (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `state`, `date_added`, `date_damaged`)  
 VALUES('BAP-WKS-A56', '072832664353', 'Sabina', 'Windows 10 PRO', 'Microsoft Surface', 'Pro 4', 'Zone 2', 'Good', '2015-11-13', '2019-10-25');
 
-INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `role`, `location`) VALUES (1, 'test', 'test', 'test@test.com', 'administrator', 'all');
+INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `role`, `location`) VALUES (1, 'test', 'test', 'test@test.com', 'admin', 'all');
 INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `role`, `location`) VALUES (2, 'admin', 'admin', 'admin@admin.com','admin', 'all');
 INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `role`, `location`) VALUES (3, 'user', 'user', 'user@user.com','normal', 'all');

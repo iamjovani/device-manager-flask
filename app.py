@@ -247,34 +247,48 @@ def update():
             cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
             account = cursor.fetchone()
            
-            
-            if request.method == 'POST':
-                name          = request.form['editDeviceName']
-                serial_number = request.form['editSerialNumber']
-                location      = request.form['editLocation']
-                operating_sys = request.form['editOperatingSys']
-                tablet_type   = request.form['editDeviceType']
-                model         = request.form['editModel']
-                zone          = request.form['editZone']
-                state         = request.form['editCondition']
-                date_added    = request.form['editDateAdded']
-                date_damaged  = request.form['editDateDamaged']
+            if account['role'] == 'admin':
+                if request.method == 'POST':
+                    name          = request.form['editDeviceName']
+                    serial_number = request.form['editSerialNumber']
+                    location      = request.form['editLocation']
+                    operating_sys = request.form['editOperatingSys']
+                    tablet_type   = request.form['editDeviceType']
+                    model         = request.form['editModel']
+                    zone          = request.form['editZone']
+                    state         = request.form['editCondition']
+                    date_added    = request.form['editDateAdded']
+                    date_damaged  = request.form['editDateDamaged']
 
 
-                st = 'UPDATE devices SET name=\"{}\", location=\"{}\", operating_sys=\"{}\", tablet_type=\"{}\", model=\"{}\", zone=\"{}\", state=\"{}\", date_added=\"{}\", '\
-                     'date_damaged=\"{}\" WHERE serial_number=\"{}\"'.format(
-                     name, location, operating_sys, tablet_type, model, zone, state, date_added, date_damaged, serial_number)
+                    st = 'UPDATE devices SET name=\"{}\", location=\"{}\", operating_sys=\"{}\", tablet_type=\"{}\", model=\"{}\", zone=\"{}\", state=\"{}\", date_added=\"{}\", '\
+                         'date_damaged=\"{}\" WHERE serial_number=\"{}\"'.format(
+                         name, location, operating_sys, tablet_type, model, zone, state, date_added, date_damaged, serial_number)
 
-                cur = mysql.connection.cursor()
-                cur.execute(st)
-                mysql.connection.commit()
-                
-                if location == 'Repair':
-                    rp = 'UPDATE `repair` SET repair_count= repair_count+1 WHERE serial_number=\"{}\"'.format(serial_number)
-                    cur.execute(rp)
+                    cur = mysql.connection.cursor()
+                    cur.execute(st)
                     mysql.connection.commit()
-                
-                flash("Data Updated Successfully")
+
+                    if location == 'Repair':
+                        rp = 'UPDATE `repair` SET repair_count= repair_count+1 WHERE serial_number=\"{}\"'.format(serial_number)
+                        cur.execute(rp)
+                        cur.execute(rp)
+                        mysql.connection.commit()
+                    flash("Data Updated Successfully")
+                    
+            elif account['role'] == 'normal':
+                cur = mysql.connection.cursor()
+                if request.method == 'POST':
+                    serial_number = request.form['editSerialNumber']
+                    damageDes = request.form['damageReport']
+                    
+                rp = 'UPDATE `repair` SET repair_count= repair_count+1 WHERE serial_number=\"{}\"'.format(serial_number)
+                rp1 = 'UPDATE `repair` SET damage_report=\"{}\" WHERE serial_number=\"{}\"'.format(damageDes, serial_number)
+                email(serial_number, damageDes)
+                cur.execute(rp)
+                mysql.connection.commit()
+                flash("Data Updated Successfully")            
+            
             return redirect(url_for('dashboard', username=session['username']))
         return redirect(url_for('login'))
 
@@ -314,13 +328,9 @@ def info(id_data):
         return redirect(url_for('dashboard', username=session['username'], info=info))
     return redirect(url_for('login'))
 
-            
-#working but not well
-@app.route('/email/<string:id_data>',  methods=['POST', 'GET'])
-def email(id_data):
-    
-    damage = None
-    
+
+#Made into a utility function for work
+def email(id_data, damage):    
     if 'loggedin' in session:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
@@ -329,13 +339,7 @@ def email(id_data):
         cursor.execute("SELECT * FROM devices WHERE serial_number = %s", (id_data,))
         data = cursor.fetchone()
         #needed, name, location and 
-
         location = data['location']
-        
-        if request.method == 'POST':
-            damage = request.form['DamageReport'] # not recieving a value
-            #email sendingh working can be tested by sending a string instead of trying to retieved value direclty form html form
-            
         DamagedReport(id_data, location, damage)
         
         return redirect(url_for('dashboard', username=session['username']))

@@ -289,7 +289,7 @@ def update():
                 cur.execute(rp)
                 mysql.connection.commit()
             
-            return redirect(url_for('dashboard-user', username=session['username']))
+            return redirect(url_for('dashboard', username=session['username']))
         return redirect(url_for('login'))
 
     except ValueError as error:
@@ -341,7 +341,7 @@ def email(id_data, damage):
         #needed, name, location and 
         location = data['location']
         DamagedReport(id_data, location, damage)
-        return redirect(url_for('dashboard-user', username=session['username']))
+        return redirect(url_for('dashboard', username=session['username']))
     return redirect(url_for('login'))
     
     

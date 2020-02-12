@@ -311,6 +311,7 @@
                   <th>Condition</th>
                   <th>Date Added <i class="fa fa-sort"></i></th>
                   <th>Date Damaged <i class="fa fa-sort"></i></th>
+                  <th>User</th>
                   <th>Action</th>
               </tr>
           </thead>
@@ -327,6 +328,7 @@
                   <td>{{row['state']}}</td>
                   <td>{{row['date_added']}}</td>
                   <td>{{row['date_damaged']}}</td>
+                  <td>{{row['user']}}</td> <!--not yet added-->
                   <td>
                       <a href="#modalEditForm" class="edit" title="Edit" data-toggle="modal" data-target="#modalEditForm{{row['name']}}">
                           <i class="material-icons">&#xE254;</i>

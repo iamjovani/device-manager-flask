@@ -344,6 +344,9 @@ def email(id_data, damage):
         return redirect(url_for('dashboard', username=session['username']))
     return redirect(url_for('login'))
     
+
+
+
     
         
 @app.errorhandler(404)

@@ -269,17 +269,17 @@
 
       <!-- Device Table -->
       <div>
-          <div class="content"><h2 style="width:  1130px;">Dashboard</h2></div>
+          <div class="content"><h2 style="width:  1148px;">Dashboard</h2></div>
           <h4><b>Device Options</b></h4>
           <div class="col-sm-4">
               <button type="button" class="btn btn-info add-new" data-toggle="modal"
                       data-target="#modalAddForm">
                   <i class="fa fa-plus"></i> Add New
               </button>
-              <button type="file" class="btn btn-success add-new">
+              <label type="file" class="btn btn-success add-new" data-toggle="modal"  data-target="#modalImportForm"  id="myfile" name="myfile">
                   <i class="fa
             fa-plus"></i> Import file
-              </button>
+              </label>
           </div>
       </div>
       <div>
@@ -328,7 +328,7 @@
                   <td>{{row['state']}}</td>
                   <td>{{row['date_added']}}</td>
                   <td>{{row['date_damaged']}}</td>
-                  <td>{{row['user']}}</td> <!--not yet added-->
+                  <td>{{row['user']}}</td> <!--added but not yet completed. add field in  add devices/update devices-->
                   <td>
                       <a href="#modalEditForm" class="edit" title="Edit" data-toggle="modal" data-target="#modalEditForm{{row['name']}}">
                           <i class="material-icons">&#xE254;</i>
@@ -503,6 +503,29 @@
                           <div class="modal-footer">
                               <button type="button" class="btn btn-primary">Save changes</button>
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+
+
+
+            <!--Import devices from files-->
+            <div class="modal fade" id="modalImportForm" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title">Import devices from file</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                            <label for="myfile">Select a file:</label>
+                            <input type="file" id="myfile" name="myfile">
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-primary">Import</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                           </div>
                       </div>
                   </div>

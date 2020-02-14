@@ -11,7 +11,5 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-
-
 def importfile(path):
-   df = pd.read_excel (r'Path where the Excel file is stored\File name.xlsx') 
+   df = pd.read_excel (path) 

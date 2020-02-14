@@ -12,7 +12,8 @@ from core import flash
 from core import Message
 from core import Mail
 from core import mail
-from core import jsonify 
+from core import jsonify
+from model import importfile
 
 #sends email
 def DamagedReport(name, location, damage):
@@ -329,6 +330,24 @@ def info(id_data):
     return redirect(url_for('login'))
 
 
+
+
+@app.route('/import')
+def file_import():
+    if 'loggedin' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+        account = cursor.fetchone()
+        try:
+            if request.method == 'POST':
+                file_path = request.form.get("myfile")
+        except ValueError as error:
+            return redirect(url_for("dashboard"))
+        
+        if file_path != None:
+            importfile(file_path)
+    return redirect(url_for('login'))
+
 #Made into a utility function for work
 def email(id_data, damage):    
     if 'loggedin' in session:
@@ -343,8 +362,6 @@ def email(id_data, damage):
         DamagedReport(id_data, location, damage)
         return redirect(url_for('dashboard', username=session['username']))
     return redirect(url_for('login'))
-    
-
 
 
     

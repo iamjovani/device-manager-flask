@@ -488,7 +488,8 @@
               </div>
               <!-- Edit Devices Ends Here -->
 
-              <div class="modal fade" id="modalInfoForm{{row['name']}}" tabindex="-1" role="dialog">
+              <form >
+                <div class="modal fade" id="modalInfoForm{{row['name']}}" tabindex="-1" role="dialog">
                   <div class="modal-dialog" role="document">
                       <div class="modal-content">
                           <div class="modal-header">
@@ -506,12 +507,12 @@
                           </div>
                       </div>
                   </div>
-              </div>
-
-
+                </div>
+              </form>
 
 
             <!--Import devices from files-->
+           <form action="{{ url_for('file_import') }}" method="post">
             <div class="modal fade" id="modalImportForm" tabindex="-1" role="dialog">
                   <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -529,15 +530,12 @@
                           </div>
                       </div>
                   </div>
-              </div>
-
+            </div>
+          </form>
           </tbody>
 
           {% endfor %}
       </table>
-
-
-
 
 
       <div class="clearfix">

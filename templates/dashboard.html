@@ -512,7 +512,7 @@
 
 
             <!--Import devices from files-->
-           <form action="{{ url_for('file_import') }}" method="post">
+           <form action="{{ url_for('file_import') }}" method="post"  enctype="multipart/form-data">
             <div class="modal fade" id="modalImportForm" tabindex="-1" role="dialog">
                   <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -525,13 +525,14 @@
                             <label for="myfile">Select a file:</label>
                             <input type="file" id="myfile" name="myfile">
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-primary">Import</button>
+                              <input type = "submit" class="btn btn-primary" value="Upload">  
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                           </div>
                       </div>
                   </div>
             </div>
           </form>
+          
           </tbody>
 
           {% endfor %}
@@ -547,9 +548,9 @@
               fa-angle-double-left"></i>
                   </a>
               </li>
-              <li class="page-item"><a href="#" class="page-link">1</a></li>
+              <li class="page-item active"><a href="#" class="page-link">1</a></li>
               <li class="page-item"><a href="#" class="page-link">2</a></li>
-              <li class="page-item active"><a href="#" class="page-link">3</a></li>
+              <li class="page-item "><a href="#" class="page-link">3</a></li>
               <li class="page-item"><a href="#" class="page-link">4</a></li>
               <li class="page-item"><a href="#" class="page-link">5</a></li>
               <li class="page-item">

@@ -332,7 +332,7 @@ def info(id_data):
 
 
 
-@app.route('/import')
+@app.route('/file_import', methods=['POST'])
 def file_import():
     if 'loggedin' in session:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -340,13 +340,19 @@ def file_import():
         account = cursor.fetchone()
         try:
             if request.method == 'POST':
-                file_path = request.form.get("myfile")
+                file_path = request.files['myfile']
+                importfile(file_path)
+                return redirect(url_for("dashboard"))
         except ValueError as error:
             return redirect(url_for("dashboard"))
         
         if file_path != None:
-            importfile(file_path)
-    return redirect(url_for('login'))
+            importfile(file_path)   
+    else:
+        return redirect(url_for('login'))
+
+
+
 
 #Made into a utility function for work
 def email(id_data, damage):    

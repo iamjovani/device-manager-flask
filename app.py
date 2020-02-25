@@ -179,10 +179,11 @@ def add():
                state = request.form.get('inputCondition')
                dateadded = request.form.get('inputDateAdded')
                datedamaged = request.form.get('inputDateDamaged')
+               inputuser    = request.form.get('inputUser')
 
-               st = 'INSERT INTO `devices` (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `state`, `date_added`, `date_damaged`)' \
-                    'VALUES(\"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\")'.format(
-               name, serialnum, location, operatingsys, devicetype, inputmodel, inputzone, state, dateadded, datedamaged)
+               st = 'INSERT INTO `devices` (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `state`, `date_added`, `date_damaged`, `user`)' \
+                    'VALUES(\"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\")'.format(
+               name, serialnum, location, operatingsys, devicetype, inputmodel, inputzone, state, dateadded, datedamaged, inputuser)
                cur = mysql.connection.cursor()
                cur.execute(st)
                mysql.connection.commit()

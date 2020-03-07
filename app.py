@@ -179,10 +179,11 @@ def add():
                state = request.form.get('inputCondition')
                dateadded = request.form.get('inputDateAdded')
                datedamaged = request.form.get('inputDateDamaged')
+               inputuser    = request.form.get('inputUser')
 
-               st = 'INSERT INTO `devices` (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `state`, `date_added`, `date_damaged`)' \
-                    'VALUES(\"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\")'.format(
-               name, serialnum, location, operatingsys, devicetype, inputmodel, inputzone, state, dateadded, datedamaged)
+               st = 'INSERT INTO `devices` (`name`, `serial_number`, `location`, `operating_sys`, `tablet_type`, `model`, `zone`, `state`, `date_added`, `date_damaged`, `user`)' \
+                    'VALUES(\"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\")'.format(
+               name, serialnum, location, operatingsys, devicetype, inputmodel, inputzone, state, dateadded, datedamaged, inputuser)
                cur = mysql.connection.cursor()
                cur.execute(st)
                mysql.connection.commit()
@@ -369,8 +370,14 @@ def email(id_data, damage):
         return redirect(url_for('dashboard', username=session['username']))
     return redirect(url_for('login'))
 
+class Thread(db.Model):
+    id = mysql.Column(mysql.Integer, primary_key=True)
+    title = mysql.column(mysql.String(50))
 
-    
+@app.route('/dashboard/<int>:page_num>')
+def thread(page_num):
+    threads = Thread.query.paginate(per_page=5, page=page_num, error_out=True)
+    return render_template('')
         
 @app.errorhandler(404)
 def page_not_found(e):

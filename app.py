@@ -369,15 +369,7 @@ def email(id_data, damage):
         DamagedReport(id_data, location, damage)
         return redirect(url_for('dashboard', username=session['username']))
     return redirect(url_for('login'))
-
-class Thread(db.Model):
-    id = mysql.Column(mysql.Integer, primary_key=True)
-    title = mysql.column(mysql.String(50))
-
-@app.route('/dashboard/<int>:page_num>')
-def thread(page_num):
-    threads = Thread.query.paginate(per_page=5, page=page_num, error_out=True)
-    return render_template('')
+        
         
 @app.errorhandler(404)
 def page_not_found(e):

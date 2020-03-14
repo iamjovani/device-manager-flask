@@ -14,6 +14,7 @@ from core import Mail
 from core import mail
 from core import jsonify
 from model import importfile
+from core import db
 
 #sends email
 def DamagedReport(name, location, damage):
@@ -370,14 +371,13 @@ def email(id_data, damage):
         return redirect(url_for('dashboard', username=session['username']))
     return redirect(url_for('login'))
 
-class Thread(db.Model):
-    id = mysql.Column(mysql.Integer, primary_key=True)
-    title = mysql.column(mysql.String(50))
-
-@app.route('/dashboard/<int>:page_num>')
-def thread(page_num):
-    threads = Thread.query.paginate(per_page=5, page=page_num, error_out=True)
-    return render_template('')
+class User(db.Model):
+    id       = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.String(255), unique= False, nullable=False)
+    email    = db.Column(db.String(100), unique=True, nullable=False)
+    role     = db.Column(db.String(20), unique = False, nullable = True)
+    location = db.Column(db.String(50), unique = False, nullable = True)
         
 @app.errorhandler(404)
 def page_not_found(e):

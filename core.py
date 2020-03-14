@@ -7,6 +7,7 @@ from flask import session, app
 from flask.helpers import flash
 from flask_mail import Mail, Message
 from flask import jsonify
+from flask_sqlalchemy import SQLAlchemy
 #import bcrypt --- for encrypting password 
 
 #import pandas as pd
@@ -36,5 +37,6 @@ app.secret_key = 'your secret key'
 # Intialize MySQL
 mysql = MySQL(app)
 mail = Mail(app)
+db = SQLAlchemy(app)
     
 #send tablet name, location and damage type in email

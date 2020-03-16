@@ -163,6 +163,8 @@ def profile():
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
     if 'loggedin' in session:
+        search = ''
+        #val = request.form['search']
         try:
             # We need all the account info for the user so we can display it on the profile page
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)

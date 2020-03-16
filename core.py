@@ -8,6 +8,7 @@ from flask.helpers import flash
 from flask_mail import Mail, Message
 from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import SQLAlchemyError
 #import bcrypt --- for encrypting password 
 
 #import pandas as pd

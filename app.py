@@ -53,22 +53,32 @@ def login():
     msg = ''
     # Check if "username" and "password" POST requests exist (user submitted form)
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        # Create variables for easy access
-        username = request.form['username']
-        password = request.form['password']
-        # Check if account exists using MySQL
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password))
-        # Fetch one record and return result
-        account = cursor.fetchone()
-        # If account exists in accounts table in out database
-        if account:
-            # Create session data, we can access this data in other routes
-            session['loggedin'] = True
-            session['id'] = account['id']
-            session['username'] = account['username']
-            # Redirect to home page
+        try:
+            # Create variables for easy access
+            username = request.form['username']
+            password = request.form['password']
+            # Check if account exists using MySQL
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password))
+            # Fetch one record and return result
+            account = cursor.fetchone()
+            # If account exists in accounts table in out database
+        except SQLAlchemyError as e:
+            msg = 'Please connect to database server'
+            return render_template('login.html', msg=msg)
+            
+        
+        try:
+            if account:
+                # Create session data, we can access this data in other routes
+                session['loggedin'] = True
+                session['id'] = account['id']
+                session['username'] = account['username']
+                # Redirect to home page
             return redirect(url_for('home'))
+        except e:
+            error = str(e.__dict__['orig'])
+            return error
         else:
             # Account doesnt exist or username/password incorrect
             msg = 'Incorrect username/password!'
@@ -94,15 +104,20 @@ def register():
     msg = ''
     # Check if "username", "password" and "email" POST requests exist (user submitted form)
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
-        # Create variables for easy access
-        username = request.form['username']
-        password = request.form['password']
-        email = request.form['email']
-           # Check if account exists using MySQL
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM accounts WHERE username = %s', (username))
-        account = cursor.fetchone()
-        # If account exists show error and validation checks
+        
+        try:
+            # Create variables for easy access
+            username = request.form['username']
+            password = request.form['password']
+            email = request.form['email']
+               # Check if account exists using MySQL
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM accounts WHERE username = %s', (username))
+            account = cursor.fetchone()
+            # If account exists show error and validation checks
+        except ValueError as error:
+            return error
+        
         if account:
             msg = 'Account already exists!'
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
@@ -112,10 +127,14 @@ def register():
         elif not username or not password or not email:
             msg = 'Please fill out the form!'
         else:
-            # Account doesnt exists and the form data is valid, now insert new account into accounts table
-            cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s)', (username, password, email))
-            mysql.connection.commit()
-            msg = 'You have successfully registered!'
+            try:
+                # Account doesnt exists and the form data is valid, now insert new account into accounts table
+                cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s)', (username, password, email))
+                mysql.connection.commit()
+                msg = 'You have successfully registered!'
+            except ValueError as error:
+                return error
+            
     elif request.method == 'POST':
         # Form is empty... (no POST data)
         msg = 'Please fill out the form!'
@@ -127,12 +146,15 @@ def register():
 def profile():
     # Check if user is loggedin
     if 'loggedin' in session:
-        # We need all the account info for the user so we can display it on the profile page
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
-        account = cursor.fetchone()
-        # Show the profile page with account info
-        return render_template('profile.html', account=account, username=session['username'])
+        try:
+            # We need all the account info for the user so we can display it on the profile page
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+            account = cursor.fetchone()
+            # Show the profile page with account info
+            return render_template('profile.html', account=account, username=session['username'])
+        except ValueError as error:
+            return error
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
@@ -141,10 +163,13 @@ def profile():
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
     if 'loggedin' in session:
-        # We need all the account info for the user so we can display it on the profile page
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
-        account = cursor.fetchone()
+        try:
+            # We need all the account info for the user so we can display it on the profile page
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+            account = cursor.fetchone()
+        except ValueError as error:
+            return error
         
         if account['role'] == 'normal':
             stmt = 'SELECT * FROM devices WHERE location=\"{}\"'.format(account['location'])
@@ -302,15 +327,21 @@ def update():
 @app.route('/users',methods=['GET'])
 def users():
     if 'loggedin' in session:
-            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
-            account = cursor.fetchone()   
+            try:
+                cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+                account = cursor.fetchone()
+            except ValueError as error:
+                return error
            
             if account['role'] == 'admin':
-                 cursor.execute('SELECT * FROM accounts')
-                 data = cursor.fetchall()
-                 # Show the profile page with 
-                 return render_template('users.html', username=session['username'], values=data) # values not transmitting to table
+                 try:
+                     cursor.execute('SELECT * FROM accounts')
+                     data = cursor.fetchall()
+                     # Show the profile page with
+                     return render_template('users.html', username=session['username'], values=data) # values not transmitting to table
+                 except ValueError as error:
+                      return error
             else:
               return redirect(url_for('home', username=session['username']))
     return redirect(url_for('login'))
@@ -320,15 +351,17 @@ def users():
 @app.route('/info/<string:id_data>', methods=['GET', 'POST'])
 def info(id_data):
     if 'loggedin' in session:
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
-        account = cursor.fetchone()
-    
-        
-        cursor.execute("SELECT * FROM repair WHERE repair_id = %s", (id_data,))
-        info = cursor.fetchone()
-        mysql.connection.commit()
-        return redirect(url_for('dashboard', username=session['username'], info=info))
+        try:
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+            account = cursor.fetchone()
+
+            cursor.execute("SELECT * FROM repair WHERE repair_id = %s", (id_data,))
+            info = cursor.fetchone()
+            mysql.connection.commit()
+            return redirect(url_for('dashboard', username=session['username'], info=info))
+        except ValueError as error:
+            return error
     return redirect(url_for('login'))
 
 
@@ -358,19 +391,22 @@ def file_import():
 
 #Made into a utility function for work
 def email(id_data, damage):    
-    if 'loggedin' in session:
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
-        account = cursor.fetchone()
+    try:
+        if 'loggedin' in session:
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+            account = cursor.fetchone()
             
-        cursor.execute("SELECT * FROM devices WHERE serial_number = %s", (id_data,))
-        data = cursor.fetchone()
-        #needed, name, location and 
-        location = data['location']
-        DamagedReport(id_data, location, damage)
-        return redirect(url_for('dashboard', username=session['username']))
-    return redirect(url_for('login'))
-
+            cursor.execute("SELECT * FROM devices WHERE serial_number = %s", (id_data,))
+            data = cursor.fetchone()
+            #needed, name, location and 
+            location = data['location']
+            DamagedReport(id_data, location, damage)
+            return redirect(url_for('dashboard', username=session['username']))
+        return redirect(url_for('login'))
+    except ValueError as error:
+        return error
+    
 class User(db.Model):
     id       = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)

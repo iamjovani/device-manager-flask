@@ -163,8 +163,7 @@ def profile():
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
     if 'loggedin' in session:
-        search = ''
-        #val = request.form['search']
+        
         try:
             # We need all the account info for the user so we can display it on the profile page
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -184,6 +183,9 @@ def dashboard():
         data = cursor.fetchall()
         length = len(data)
         # Show the profile page with 
+        
+        
+        
         return render_template('dashboard.html', username=session['username'], values=data, length=length) # values not transmitting to table
     return redirect(url_for('login'))
 
@@ -409,6 +411,22 @@ def email(id_data, damage):
     except ValueError as error:
         return error
     
+    
+@app.route('/search_results')
+def search_results(search):
+    results = []
+    search_string = search.data['search']
+    if search.data['search'] == '':
+        qry = db_session.query(Album)
+        results = qry.all()
+    if not results:
+        flash('No results found!')
+        return redirect('/')
+    else:
+        # display results
+        return render_template('results.html', results=results)
+
+    
 class User(db.Model):
     id       = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
@@ -416,6 +434,7 @@ class User(db.Model):
     email    = db.Column(db.String(100), unique=True, nullable=False)
     role     = db.Column(db.String(20), unique = False, nullable = True)
     location = db.Column(db.String(50), unique = False, nullable = True)
+    
         
 @app.errorhandler(404)
 def page_not_found(e):

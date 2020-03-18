@@ -411,20 +411,19 @@ def email(id_data, damage):
     except ValueError as error:
         return error
     
-    
+ # !UNDER CONTRUCTION    
 @app.route('/search_results')
-def search_results(search):
-    results = []
-    search_string = search.data['search']
-    if search.data['search'] == '':
-        qry = db_session.query(Album)
-        results = qry.all()
-    if not results:
-        flash('No results found!')
-        return redirect('/')
-    else:
-        # display results
-        return render_template('results.html', results=results)
+def search_results():
+    try:
+        if 'loggedin' in session:
+            if request.method == 'POST':
+                searchterm = request.form['search']
+                if searchterm != '':
+                     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                     stmt = 'SELECT * FROM devices WHERE name LIKE %{}%'.format(searchterm)
+                     cursor.execute(stmt)
+                     account = cursor.fetchone()
+    return render_template('results.html', results=results)
 
     
 class User(db.Model):

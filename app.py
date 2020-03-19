@@ -159,11 +159,9 @@ def profile():
     return redirect(url_for('login'))
 
 
-
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
     if 'loggedin' in session:
-        
         try:
             # We need all the account info for the user so we can display it on the profile page
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -414,6 +412,11 @@ def email(id_data, damage):
  # !UNDER CONTRUCTION    
 @app.route('/search_results')
 def search_results():
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+    account = cursor.fetchone()
+
     try:
         if 'loggedin' in session:
             if request.method == 'POST':
@@ -422,9 +425,14 @@ def search_results():
                      cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
                      stmt = 'SELECT * FROM devices WHERE name LIKE %{}%'.format(searchterm)
                      cursor.execute(stmt)
-                     account = cursor.fetchone()
-    return render_template('results.html', results=results)
+                     searchitems = cursor.fetchall()
+                     length = len(searchitems)
+                     return render_template('dashboard.html', username=session['username'], values=searchitems, length=length) # values not transmitting to table
+    except ValueError as error:
+        return error
 
+    finally:
+        return redirect(url_for('login'))
     
 class User(db.Model):
     id       = db.Column(db.Integer, primary_key=True)

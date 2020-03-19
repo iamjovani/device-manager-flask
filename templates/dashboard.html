@@ -299,14 +299,11 @@
               <div class="col-sm-4">
                   <form action="{{ url_for('dashboard') }}" method="post">
                       <div class="search-box">
-                          
                           <input type="text" class="form-control" id="search" name="search" placeholder="Search&hellip;">
                            <a href="{{ url_for('search_results') }}"  class="delete" title="Delete" data-toggle="tooltip"> <!--Needs fixing -->
                             <i class="material-icons">&#xE8B6;</i>
                           </a>
                       </div>
-
-                      
                   </form>
               </div>
           </div>
@@ -522,7 +519,6 @@
                   </div>
                 </div>
               </form>
-
 
             <!--Import devices from files-->
            <form action="{{ url_for('file_import') }}" method="post"  enctype="multipart/form-data">

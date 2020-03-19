@@ -63,25 +63,27 @@ def login():
             # Fetch one record and return result
             account = cursor.fetchone()
             # If account exists in accounts table in out database
+            try:
+                if account:
+                    # Create session data, we can access this data in other routes
+                    session['loggedin'] = True
+                    session['id'] = account['id']
+                    session['username'] = account['username']
+                    # Redirect to home page
+                    return redirect(url_for('home'))
+                else:
+                     msg = 'Incorrect username/password!'
+                     return render_template('login.html', msg=msg)
+            except ValueError as error:
+                return error
+            
+            
         except SQLAlchemyError as e:
             msg = 'Please connect to database server'
             return render_template('login.html', msg=msg)
             
-        
-        try:
-            if account:
-                # Create session data, we can access this data in other routes
-                session['loggedin'] = True
-                session['id'] = account['id']
-                session['username'] = account['username']
-                # Redirect to home page
-            return redirect(url_for('home'))
-        except e:
-            error = str(e.__dict__['orig'])
-            return error
-        else:
-            # Account doesnt exist or username/password incorrect
-            msg = 'Incorrect username/password!'
+            
+    # Account doesnt exist or username/password incorrect
     # Show the login form with message (if any)
     return render_template('login.html', msg=msg)
 
@@ -181,8 +183,6 @@ def dashboard():
         data = cursor.fetchall()
         length = len(data)
         # Show the profile page with 
-        
-        
         
         return render_template('dashboard.html', username=session['username'], values=data, length=length) # values not transmitting to table
     return redirect(url_for('login'))
@@ -412,13 +412,13 @@ def email(id_data, damage):
  # !UNDER CONTRUCTION    
 @app.route('/search_results')
 def search_results():
-
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
-    account = cursor.fetchone()
-
     try:
         if 'loggedin' in session:
+            
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
+            account = cursor.fetchone()
+            
             if request.method == 'POST':
                 searchterm = request.form['search']
                 if searchterm != '':
@@ -428,11 +428,10 @@ def search_results():
                      searchitems = cursor.fetchall()
                      length = len(searchitems)
                      return render_template('dashboard.html', username=session['username'], values=searchitems, length=length) # values not transmitting to table
+                return redirect(url_for('dashboard', username=session['username']))
     except ValueError as error:
         return error
-
-    finally:
-        return redirect(url_for('login'))
+        #return redirect(url_for('login'))
     
 class User(db.Model):
     id       = db.Column(db.Integer, primary_key=True)

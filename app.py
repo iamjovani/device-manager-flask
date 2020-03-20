@@ -368,7 +368,6 @@ def info(id_data):
 
 
 
-
 @app.route('/file_import', methods=['POST'])
 def file_import():
     if 'loggedin' in session:
@@ -410,7 +409,7 @@ def email(id_data, damage):
         return error
     
  # !UNDER CONTRUCTION    
-@app.route('/search_results')
+@app.route('/search_results', methods=['POST'])
 def search_results():
     try:
         if 'loggedin' in session:
@@ -423,7 +422,7 @@ def search_results():
                 searchterm = request.form['search']
                 if searchterm != '':
                      cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-                     stmt = 'SELECT * FROM devices WHERE name LIKE %{}%'.format(searchterm)
+                     stmt = 'SELECT * FROM devices WHERE name LIKE \"%{}%\"'.format(searchterm)
                      cursor.execute(stmt)
                      searchitems = cursor.fetchall()
                      length = len(searchitems)
@@ -431,7 +430,7 @@ def search_results():
                 return redirect(url_for('dashboard', username=session['username']))
     except ValueError as error:
         return error
-        #return redirect(url_for('login'))
+    return redirect(url_for('login'))
     
 class User(db.Model):
     id       = db.Column(db.Integer, primary_key=True)

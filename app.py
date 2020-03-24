@@ -15,6 +15,7 @@ from core import mail
 from core import jsonify
 from model import importfile
 from core import db
+import hashlib
 
 #sends email
 def DamagedReport(name, location, damage):
@@ -98,9 +99,34 @@ def logout():
    # Redirect to login page
    return redirect(url_for('login'))
 
+'''
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    msg = ''
+    
+    username = request.args.get('username')
+    location = request.args.get('location')
+    email    = request.args.get('email')
+    password = (request.args.get('password'))
+    
+    salt = hashlib.md5(password.encode())
+    
+    
+    if username and email:
+        existing_user = User.query.filter(User.username == username or User.email == email).first()
+        if existing:
+            msg = '{} ({}) already created!'.format(username, email)
+            return render_template('register.html', msg=msg)
+        
+        new_user = User(username=username, password=salt.hexdigest(), email=email, role='normal', location=location)
+        db.session.add(new_user)
+        db.session.commit()
+    return render_template('register.html', msg=msg)
+'''
+
 
 # http://localhost:5000/register - this will be the registration page, we need to use both GET and POST requests
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST']) 
 def register():
     # Output message if something goes wrong...
     msg = ''
@@ -433,7 +459,7 @@ def search_results():
     return redirect(url_for('login'))
     
 class User(db.Model):
-    id       = db.Column(db.Integer, primary_key=True)
+    id       = db.AutoField(primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(255), unique= False, nullable=False)
     email    = db.Column(db.String(100), unique=True, nullable=False)

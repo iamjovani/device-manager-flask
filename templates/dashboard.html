@@ -295,7 +295,7 @@
 
           <div class="row">
 
-              <div class="col-sm-8"><h2><b>Device Details</b></h2></div>
+             
               <div class="col-sm-4">
                   <form action="{{ url_for('dashboard') }}" method="post">
                      
@@ -309,11 +309,11 @@
                             <i class="material-icons">&#xE8B6;</i>
                           </a>
           </div>
-
-         
-       
-
+    
       </div>
+
+      <div class="col-sm-4"><h2><b></b></h2></div>
+
       <table class="table table-striped table-hover table-bordered table-responsive" id="device_table">
           <thead>
               <tr>
@@ -554,7 +554,7 @@
       </table>
 
 
-      <div class="clearfix">
+      <div class="pagination-container">
           <div class="hint-text">Showing <b>{{length}}</b> out of <b>{{length}}</b> entries</div>
           <ul class="pagination">
               <li class="page-item disabled">
@@ -606,6 +606,59 @@
             }
 
         });
+      </script>
+
+
+      <script>
+        var table = '#device_table'
+        $('#maxRows').on('change', function(){
+            $('.pagination').html('')
+            var trnum = 0
+            var maxRows = parseInt($(this).val())
+            var totalRows = $(table+ 'tbody tr').length
+            $(table+' tr:gt(0)').each(function(){
+                trnum++
+                if(trnum > maxRows){
+                    $(this).hide()
+                }
+                if (trnum <= maxRows){
+                    $(this).show()
+                }
+            })
+
+            if (totalRows > maxRows){
+                var pagenum = Math.ceil(totalRows/maxRows)
+                for(var i=1;i<=pagenum;){
+                    $('.pagination').append('<li data-page="'+i+'">\<span>'+ i++ +'<span class="sr-only">(current)</span> </span\<li>').show()
+                }
+            }
+
+            $('.pagination li:first-child').addClass('active')
+            $('.pagination li').on('click', function(){
+                var pageNum = $(this).attr('data-page')
+                var trIndex = 0;
+                $('.pagination li').removeClass('active')
+                $(this).addClass('active')
+                $(table+'tr:gt(0)').each(function(){
+                    trIndex++
+                    if(trIndex > (maxRows*pageNum) || trIndex <= ((maxRows*pageNum) - maxRows)){
+                        $(this).hide()
+                    }
+                    else
+                    {
+                        $(this).show()
+                    }
+                })
+            })
+        })
+        $(function(){
+            $('table tr:eq(0)').prepend('<th>ID</th>')
+            var id = 0;
+            $('table tr:gt(0)').each(function){
+                id++
+                $(this).prepend('<td>'+id+'</td>')
+            })
+        })
       </script>
 
       {% endblock %}

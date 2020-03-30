@@ -434,7 +434,7 @@ def email(id_data, damage):
     except ValueError as error:
         return error
     
- # !UNDER CONTRUCTION    
+# !UNDER CONTRUCTION    
 @app.route('/search_results', methods=['POST'])
 def search_results():
     try:
@@ -459,7 +459,7 @@ def search_results():
     return redirect(url_for('login'))
     
 class User(db.Model):
-    id       = db.AutoField(primary_key=True)
+    id = db.Column(db.Integer , primary_key=True , autoincrement=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(255), unique= False, nullable=False)
     email    = db.Column(db.String(100), unique=True, nullable=False)

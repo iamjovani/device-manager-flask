@@ -585,7 +585,7 @@
 
 
             function search_table(value){
-                $('#device_table tr').each(function(){
+                $('#device_table tbody').each(function(){
                     var found = 'false';
                     $(this).each(function(){
                         if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)

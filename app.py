@@ -315,11 +315,11 @@ def update():
                     state         = request.form['editCondition']
                     date_added    = request.form['editDateAdded']
                     date_damaged  = request.form['editDateDamaged']
-
+                    users         = request.form['editUser']
 
                     st = 'UPDATE devices SET name=\"{}\", location=\"{}\", operating_sys=\"{}\", tablet_type=\"{}\", model=\"{}\", zone=\"{}\", state=\"{}\", date_added=\"{}\", '\
-                         'date_damaged=\"{}\" WHERE serial_number=\"{}\"'.format(
-                         name, location, operating_sys, tablet_type, model, zone, state, date_added, date_damaged, serial_number)
+                         'date_damaged=\"{}\", user=\"{}\" WHERE serial_number=\"{}\"'.format(
+                         name, location, operating_sys, tablet_type, model, zone, state, date_added, date_damaged, users, serial_number)
 
                     cur = mysql.connection.cursor()
                     cur.execute(st)
@@ -349,7 +349,7 @@ def update():
         return redirect(url_for('login'))
 
     except ValueError as error:
-        flash("Failed to insert record into table {}".format(error))  
+        flash("Failed to insert record into table {}".format(error))   
 
 
 @app.route('/users',methods=['GET'])
@@ -434,35 +434,7 @@ def email(id_data, damage):
     except ValueError as error:
         return error
     
-# !UNDER CONTRUCTION 
-'''   
-@app.route('/search_results', methods=['POST'])
-def search_results():
-    try:
-        if 'loggedin' in session:
-            
-            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM accounts WHERE id = %s', [session['id']])
-            account = cursor.fetchone()
-            
-            if request.method == 'POST':
-                searchterm = request.form['search']
-                if searchterm != '':
-                     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-                     stmt = 'SELECT * FROM devices WHERE name LIKE \"%{}%\"'.format(searchterm)
-                     cursor.execute(stmt)
-                     searchitems = cursor.fetchall()
-                     length = len(searchitems)
-                     return render_template('dashboard.html', username=session['username'], values=searchitems, length=length) # values not transmitting to table
-                return redirect(url_for('dashboard', username=session['username']))
-    except ValueError as error:
-        return error
-    return redirect(url_for('login'))
-    
-    
-    
-'''    
-    
+
     
 class User(db.Model):
     id = db.Column(db.Integer , primary_key=True , autoincrement=True)
